@@ -1,0 +1,8 @@
+2024-05-25 14:22:16.498 [INFO] datacap starting
+2024-05-25 14:22:16.501 [INFO] dc_id=[0]
+2024-05-25 14:22:16.501 [INFO] init file path [/home/emdc/EMDC/etc/emdc.conf]
+2024-05-25 14:22:16.504 [ERROR] cannot find entry DATACAP0:GPIO_PIN_RA in /home/emdc/EMDC/etc/emdc.conf. Exiting
+2024-05-25 14:45:08.426 [INFO] datacap starting
+2024-05-25 14:45:08.428 [INFO] dc_id=[0]
+2024-05-25 14:45:08.428 [INFO] init file path [/home/emdc/EMDC/etc/emdc.conf]
+2024-05-25 14:45:08.430 [ERROR] cannot find entry DATACAP0:GPIO_PIN_RA in /home/emdc/EMDC/etc/emdc.conf. Exiting

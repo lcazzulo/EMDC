@@ -1,0 +1,1292 @@
+The system is: Linux - 6.6.20+rpt-rpi-v6 - armv6l
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/3.25.1/CompilerIdC/a.out"
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-0GTAuk
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_05761/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_05761.dir/build.make CMakeFiles/cmTC_05761.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-0GTAuk'
+Building C object CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc   -v -o CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.25/Modules/CMakeCCompilerABI.c
+Using built-in specs.
+COLLECT_GCC=/usr/bin/cc
+Target: arm-linux-gnueabihf
+Configured with: ../src/configure -v --with-pkgversion='Raspbian 12.2.0-14+rpi1' --with-bugurl=file:///usr/share/doc/gcc-12/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-12 --program-prefix=arm-linux-gnueabihf- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-libitm --disable-libquadmath --disable-libquadmath-support --enable-plugin --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-sjlj-exceptions --with-arch=armv6+fp --with-float=hard --disable-werror --enable-checking=release --build=arm-linux-gnueabihf --host=arm-linux-gnueabihf --target=arm-linux-gnueabihf
+Thread model: posix
+Supported LTO compression algorithms: zlib zstd
+gcc version 12.2.0 (Raspbian 12.2.0-14+rpi1) 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'CMakeFiles/cmTC_05761.dir/'
+ /usr/lib/gcc/arm-linux-gnueabihf/12/cc1 -quiet -v -imultilib . -imultiarch arm-linux-gnueabihf /usr/share/cmake-3.25/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_05761.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mfloat-abi=hard -mtls-dialect=gnu -marm -mlibarch=armv6+fp -march=armv6+fp -version -o /tmp/ccgoYYYc.s
+GNU C17 (Raspbian 12.2.0-14+rpi1) version 12.2.0 (arm-linux-gnueabihf)
+	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.1-p1, MPC version 1.3.1, isl version isl-0.25-GMP
+
+warning: MPFR header version 4.1.1-p1 differs from library version 4.2.0.
+GGC heuristics: --param ggc-min-expand=59 --param ggc-min-heapsize=54775
+ignoring nonexistent directory "/usr/local/include/arm-linux-gnueabihf"
+ignoring nonexistent directory "/usr/lib/gcc/arm-linux-gnueabihf/12/include-fixed"
+ignoring nonexistent directory "/usr/lib/gcc/arm-linux-gnueabihf/12/../../../../arm-linux-gnueabihf/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/lib/gcc/arm-linux-gnueabihf/12/include
+ /usr/local/include
+ /usr/include/arm-linux-gnueabihf
+ /usr/include
+End of search list.
+GNU C17 (Raspbian 12.2.0-14+rpi1) version 12.2.0 (arm-linux-gnueabihf)
+	compiled by GNU C version 12.2.0, GMP version 6.2.1, MPFR version 4.1.1-p1, MPC version 1.3.1, isl version isl-0.25-GMP
+
+warning: MPFR header version 4.1.1-p1 differs from library version 4.2.0.
+GGC heuristics: --param ggc-min-expand=59 --param ggc-min-heapsize=54775
+Compiler executable checksum: aa6629b5f44fe3420ba005fbae7bc0e6
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'CMakeFiles/cmTC_05761.dir/'
+ as -v -march=armv6+fp -mfloat-abi=hard -meabi=5 -o CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o /tmp/ccgoYYYc.s
+GNU assembler version 2.40 (arm-linux-gnueabihf) using BFD version (GNU Binutils for Raspbian) 2.40
+COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/
+LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/12/../../../:/lib/arm-linux-gnueabihf/:/lib/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.'
+Linking C executable cmTC_05761
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_05761.dir/link.txt --verbose=1
+/usr/bin/cc  -v CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o -o cmTC_05761 
+Using built-in specs.
+COLLECT_GCC=/usr/bin/cc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/arm-linux-gnueabihf/12/lto-wrapper
+Target: arm-linux-gnueabihf
+Configured with: ../src/configure -v --with-pkgversion='Raspbian 12.2.0-14+rpi1' --with-bugurl=file:///usr/share/doc/gcc-12/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-12 --program-prefix=arm-linux-gnueabihf- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-libitm --disable-libquadmath --disable-libquadmath-support --enable-plugin --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-sjlj-exceptions --with-arch=armv6+fp --with-float=hard --disable-werror --enable-checking=release --build=arm-linux-gnueabihf --host=arm-linux-gnueabihf --target=arm-linux-gnueabihf
+Thread model: posix
+Supported LTO compression algorithms: zlib zstd
+gcc version 12.2.0 (Raspbian 12.2.0-14+rpi1) 
+COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/
+LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/12/../../../:/lib/arm-linux-gnueabihf/:/lib/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_05761'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'cmTC_05761.'
+ /usr/lib/gcc/arm-linux-gnueabihf/12/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/12/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/12/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3b14sc.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu --as-needed -m armelf_linux_eabi -o cmTC_05761 /usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/12/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/12 -L/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/12/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/arm-linux-gnueabihf/12/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_05761'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'cmTC_05761.'
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-0GTAuk'
+
+
+
+Parsed C implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/usr/lib/gcc/arm-linux-gnueabihf/12/include]
+    add: [/usr/local/include]
+    add: [/usr/include/arm-linux-gnueabihf]
+    add: [/usr/include]
+  end of search list found
+  collapse include dir [/usr/lib/gcc/arm-linux-gnueabihf/12/include] ==> [/usr/lib/gcc/arm-linux-gnueabihf/12/include]
+  collapse include dir [/usr/local/include] ==> [/usr/local/include]
+  collapse include dir [/usr/include/arm-linux-gnueabihf] ==> [/usr/include/arm-linux-gnueabihf]
+  collapse include dir [/usr/include] ==> [/usr/include]
+  implicit include dirs: [/usr/lib/gcc/arm-linux-gnueabihf/12/include;/usr/local/include;/usr/include/arm-linux-gnueabihf;/usr/include]
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-0GTAuk]
+  ignore line: []
+  ignore line: [Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_05761/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_05761.dir/build.make CMakeFiles/cmTC_05761.dir/build]
+  ignore line: [gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-0GTAuk']
+  ignore line: [Building C object CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.25/Modules/CMakeCCompilerABI.c]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/bin/cc]
+  ignore line: [Target: arm-linux-gnueabihf]
+  ignore line: [Configured with: ../src/configure -v --with-pkgversion='Raspbian 12.2.0-14+rpi1' --with-bugurl=file:///usr/share/doc/gcc-12/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-12 --program-prefix=arm-linux-gnueabihf- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-libitm --disable-libquadmath --disable-libquadmath-support --enable-plugin --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-sjlj-exceptions --with-arch=armv6+fp --with-float=hard --disable-werror --enable-checking=release --build=arm-linux-gnueabihf --host=arm-linux-gnueabihf --target=arm-linux-gnueabihf]
+  ignore line: [Thread model: posix]
+  ignore line: [Supported LTO compression algorithms: zlib zstd]
+  ignore line: [gcc version 12.2.0 (Raspbian 12.2.0-14+rpi1) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'CMakeFiles/cmTC_05761.dir/']
+  ignore line: [ /usr/lib/gcc/arm-linux-gnueabihf/12/cc1 -quiet -v -imultilib . -imultiarch arm-linux-gnueabihf /usr/share/cmake-3.25/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_05761.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mfloat-abi=hard -mtls-dialect=gnu -marm -mlibarch=armv6+fp -march=armv6+fp -version -o /tmp/ccgoYYYc.s]
+  ignore line: [GNU C17 (Raspbian 12.2.0-14+rpi1) version 12.2.0 (arm-linux-gnueabihf)]
+  ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.1-p1  MPC version 1.3.1  isl version isl-0.25-GMP]
+  ignore line: []
+  ignore line: [warning: MPFR header version 4.1.1-p1 differs from library version 4.2.0.]
+  ignore line: [GGC heuristics: --param ggc-min-expand=59 --param ggc-min-heapsize=54775]
+  ignore line: [ignoring nonexistent directory "/usr/local/include/arm-linux-gnueabihf"]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/arm-linux-gnueabihf/12/include-fixed"]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/arm-linux-gnueabihf/12/../../../../arm-linux-gnueabihf/include"]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /usr/lib/gcc/arm-linux-gnueabihf/12/include]
+  ignore line: [ /usr/local/include]
+  ignore line: [ /usr/include/arm-linux-gnueabihf]
+  ignore line: [ /usr/include]
+  ignore line: [End of search list.]
+  ignore line: [GNU C17 (Raspbian 12.2.0-14+rpi1) version 12.2.0 (arm-linux-gnueabihf)]
+  ignore line: [	compiled by GNU C version 12.2.0  GMP version 6.2.1  MPFR version 4.1.1-p1  MPC version 1.3.1  isl version isl-0.25-GMP]
+  ignore line: []
+  ignore line: [warning: MPFR header version 4.1.1-p1 differs from library version 4.2.0.]
+  ignore line: [GGC heuristics: --param ggc-min-expand=59 --param ggc-min-heapsize=54775]
+  ignore line: [Compiler executable checksum: aa6629b5f44fe3420ba005fbae7bc0e6]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'CMakeFiles/cmTC_05761.dir/']
+  ignore line: [ as -v -march=armv6+fp -mfloat-abi=hard -meabi=5 -o CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o /tmp/ccgoYYYc.s]
+  ignore line: [GNU assembler version 2.40 (arm-linux-gnueabihf) using BFD version (GNU Binutils for Raspbian) 2.40]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/12/../../../:/lib/arm-linux-gnueabihf/:/lib/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.']
+  ignore line: [Linking C executable cmTC_05761]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_05761.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o -o cmTC_05761 ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/bin/cc]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/arm-linux-gnueabihf/12/lto-wrapper]
+  ignore line: [Target: arm-linux-gnueabihf]
+  ignore line: [Configured with: ../src/configure -v --with-pkgversion='Raspbian 12.2.0-14+rpi1' --with-bugurl=file:///usr/share/doc/gcc-12/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-12 --program-prefix=arm-linux-gnueabihf- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-libitm --disable-libquadmath --disable-libquadmath-support --enable-plugin --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-sjlj-exceptions --with-arch=armv6+fp --with-float=hard --disable-werror --enable-checking=release --build=arm-linux-gnueabihf --host=arm-linux-gnueabihf --target=arm-linux-gnueabihf]
+  ignore line: [Thread model: posix]
+  ignore line: [Supported LTO compression algorithms: zlib zstd]
+  ignore line: [gcc version 12.2.0 (Raspbian 12.2.0-14+rpi1) ]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/arm-linux-gnueabihf/12/:/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/:/usr/lib/gcc/arm-linux-gnueabihf/12/../../../:/lib/arm-linux-gnueabihf/:/lib/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_05761'  '-mfloat-abi=hard' '-mtls-dialect=gnu' '-marm' '-mlibarch=armv6+fp' '-march=armv6+fp' '-dumpdir' 'cmTC_05761.']
+  link line: [ /usr/lib/gcc/arm-linux-gnueabihf/12/collect2 -plugin /usr/lib/gcc/arm-linux-gnueabihf/12/liblto_plugin.so -plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/12/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3b14sc.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X --hash-style=gnu --as-needed -m armelf_linux_eabi -o cmTC_05761 /usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crt1.o /usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crti.o /usr/lib/gcc/arm-linux-gnueabihf/12/crtbegin.o -L/usr/lib/gcc/arm-linux-gnueabihf/12 -L/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf -L/usr/lib/gcc/arm-linux-gnueabihf/12/../../.. -L/lib/arm-linux-gnueabihf -L/usr/lib/arm-linux-gnueabihf CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/arm-linux-gnueabihf/12/crtend.o /usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crtn.o]
+    arg [/usr/lib/gcc/arm-linux-gnueabihf/12/collect2] ==> ignore
+    arg [-plugin] ==> ignore
+    arg [/usr/lib/gcc/arm-linux-gnueabihf/12/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/usr/lib/gcc/arm-linux-gnueabihf/12/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cc3b14sc.res] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [-plugin-opt=-pass-through=-lc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [--build-id] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib/ld-linux-armhf.so.3] ==> ignore
+    arg [-X] ==> ignore
+    arg [--hash-style=gnu] ==> ignore
+    arg [--as-needed] ==> ignore
+    arg [-m] ==> ignore
+    arg [armelf_linux_eabi] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_05761] ==> ignore
+    arg [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crt1.o] ==> obj [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crt1.o]
+    arg [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crti.o] ==> obj [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crti.o]
+    arg [/usr/lib/gcc/arm-linux-gnueabihf/12/crtbegin.o] ==> obj [/usr/lib/gcc/arm-linux-gnueabihf/12/crtbegin.o]
+    arg [-L/usr/lib/gcc/arm-linux-gnueabihf/12] ==> dir [/usr/lib/gcc/arm-linux-gnueabihf/12]
+    arg [-L/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf] ==> dir [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf]
+    arg [-L/usr/lib/gcc/arm-linux-gnueabihf/12/../../..] ==> dir [/usr/lib/gcc/arm-linux-gnueabihf/12/../../..]
+    arg [-L/lib/arm-linux-gnueabihf] ==> dir [/lib/arm-linux-gnueabihf]
+    arg [-L/usr/lib/arm-linux-gnueabihf] ==> dir [/usr/lib/arm-linux-gnueabihf]
+    arg [CMakeFiles/cmTC_05761.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--push-state] ==> ignore
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--pop-state] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--push-state] ==> ignore
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--pop-state] ==> ignore
+    arg [/usr/lib/gcc/arm-linux-gnueabihf/12/crtend.o] ==> obj [/usr/lib/gcc/arm-linux-gnueabihf/12/crtend.o]
+    arg [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crtn.o] ==> obj [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crtn.o]
+  collapse obj [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crt1.o] ==> [/usr/lib/arm-linux-gnueabihf/crt1.o]
+  collapse obj [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crti.o] ==> [/usr/lib/arm-linux-gnueabihf/crti.o]
+  collapse obj [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf/crtn.o] ==> [/usr/lib/arm-linux-gnueabihf/crtn.o]
+  collapse library dir [/usr/lib/gcc/arm-linux-gnueabihf/12] ==> [/usr/lib/gcc/arm-linux-gnueabihf/12]
+  collapse library dir [/usr/lib/gcc/arm-linux-gnueabihf/12/../../../arm-linux-gnueabihf] ==> [/usr/lib/arm-linux-gnueabihf]
+  collapse library dir [/usr/lib/gcc/arm-linux-gnueabihf/12/../../..] ==> [/usr/lib]
+  collapse library dir [/lib/arm-linux-gnueabihf] ==> [/lib/arm-linux-gnueabihf]
+  collapse library dir [/usr/lib/arm-linux-gnueabihf] ==> [/usr/lib/arm-linux-gnueabihf]
+  implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+  implicit objs: [/usr/lib/arm-linux-gnueabihf/crt1.o;/usr/lib/arm-linux-gnueabihf/crti.o;/usr/lib/gcc/arm-linux-gnueabihf/12/crtbegin.o;/usr/lib/gcc/arm-linux-gnueabihf/12/crtend.o;/usr/lib/arm-linux-gnueabihf/crtn.o]
+  implicit dirs: [/usr/lib/gcc/arm-linux-gnueabihf/12;/usr/lib/arm-linux-gnueabihf;/usr/lib;/lib/arm-linux-gnueabihf]
+  implicit fwks: []
+
+
+Determining if the include file fcntl.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Xszy63
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9de25/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9de25.dir/build.make CMakeFiles/cmTC_9de25.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Xszy63'
+Building C object CMakeFiles/cmTC_9de25.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_9de25.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Xszy63/CheckIncludeFile.c
+Linking C executable cmTC_9de25
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9de25.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_9de25.dir/CheckIncludeFile.c.o -o cmTC_9de25  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Xszy63'
+
+
+
+Determining if the include file inttypes.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-dRBign
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_020c2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_020c2.dir/build.make CMakeFiles/cmTC_020c2.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-dRBign'
+Building C object CMakeFiles/cmTC_020c2.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_020c2.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-dRBign/CheckIncludeFile.c
+Linking C executable cmTC_020c2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_020c2.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_020c2.dir/CheckIncludeFile.c.o -o cmTC_020c2  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-dRBign'
+
+
+
+Determining if the include file stdarg.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3lQ4GU
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e7ae2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_e7ae2.dir/build.make CMakeFiles/cmTC_e7ae2.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3lQ4GU'
+Building C object CMakeFiles/cmTC_e7ae2.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_e7ae2.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3lQ4GU/CheckIncludeFile.c
+Linking C executable cmTC_e7ae2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e7ae2.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_e7ae2.dir/CheckIncludeFile.c.o -o cmTC_e7ae2  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3lQ4GU'
+
+
+
+Determining if the include file strings.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-P0ijPo
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5eebd/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_5eebd.dir/build.make CMakeFiles/cmTC_5eebd.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-P0ijPo'
+Building C object CMakeFiles/cmTC_5eebd.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_5eebd.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-P0ijPo/CheckIncludeFile.c
+Linking C executable cmTC_5eebd
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5eebd.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_5eebd.dir/CheckIncludeFile.c.o -o cmTC_5eebd  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-P0ijPo'
+
+
+
+Determining if the include file string.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-d7vm7f
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_67a86/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_67a86.dir/build.make CMakeFiles/cmTC_67a86.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-d7vm7f'
+Building C object CMakeFiles/cmTC_67a86.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_67a86.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-d7vm7f/CheckIncludeFile.c
+Linking C executable cmTC_67a86
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_67a86.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_67a86.dir/CheckIncludeFile.c.o -o cmTC_67a86  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-d7vm7f'
+
+
+
+Determining if the include file syslog.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rsFh9U
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e8e88/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_e8e88.dir/build.make CMakeFiles/cmTC_e8e88.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rsFh9U'
+Building C object CMakeFiles/cmTC_e8e88.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_e8e88.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rsFh9U/CheckIncludeFile.c
+Linking C executable cmTC_e8e88
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e8e88.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_e8e88.dir/CheckIncludeFile.c.o -o cmTC_e8e88  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rsFh9U'
+
+
+
+Determining if files stdlib.h;stdarg.h;string.h;float.h exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-zqwk93
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c6ee1/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c6ee1.dir/build.make CMakeFiles/cmTC_c6ee1.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-zqwk93'
+Building C object CMakeFiles/cmTC_c6ee1.dir/STDC_HEADERS.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_c6ee1.dir/STDC_HEADERS.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-zqwk93/STDC_HEADERS.c
+Linking C executable cmTC_c6ee1
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c6ee1.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_c6ee1.dir/STDC_HEADERS.c.o -o cmTC_c6ee1  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-zqwk93'
+
+
+
+Determining if the include file unistd.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-HiSMdX
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_52cc9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_52cc9.dir/build.make CMakeFiles/cmTC_52cc9.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-HiSMdX'
+Building C object CMakeFiles/cmTC_52cc9.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_52cc9.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-HiSMdX/CheckIncludeFile.c
+Linking C executable cmTC_52cc9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_52cc9.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_52cc9.dir/CheckIncludeFile.c.o -o cmTC_52cc9  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-HiSMdX'
+
+
+
+Determining if the include file sys/types.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-98bzE9
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f1a65/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_f1a65.dir/build.make CMakeFiles/cmTC_f1a65.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-98bzE9'
+Building C object CMakeFiles/cmTC_f1a65.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_f1a65.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-98bzE9/CheckIncludeFile.c
+Linking C executable cmTC_f1a65
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f1a65.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_f1a65.dir/CheckIncludeFile.c.o -o cmTC_f1a65  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-98bzE9'
+
+
+
+Determining if the include file sys/resource.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fqJjZO
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7fbf5/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7fbf5.dir/build.make CMakeFiles/cmTC_7fbf5.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fqJjZO'
+Building C object CMakeFiles/cmTC_7fbf5.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_7fbf5.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fqJjZO/CheckIncludeFile.c
+Linking C executable cmTC_7fbf5
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7fbf5.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_7fbf5.dir/CheckIncludeFile.c.o -o cmTC_7fbf5  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fqJjZO'
+
+
+
+Determining if the include file dlfcn.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-xXxM7G
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9bc42/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9bc42.dir/build.make CMakeFiles/cmTC_9bc42.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-xXxM7G'
+Building C object CMakeFiles/cmTC_9bc42.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_9bc42.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-xXxM7G/CheckIncludeFile.c
+Linking C executable cmTC_9bc42
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9bc42.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_9bc42.dir/CheckIncludeFile.c.o -o cmTC_9bc42  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-xXxM7G'
+
+
+
+Determining if the include file endian.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rEtytk
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0ed32/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_0ed32.dir/build.make CMakeFiles/cmTC_0ed32.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rEtytk'
+Building C object CMakeFiles/cmTC_0ed32.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_0ed32.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rEtytk/CheckIncludeFile.c
+Linking C executable cmTC_0ed32
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0ed32.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_0ed32.dir/CheckIncludeFile.c.o -o cmTC_0ed32  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rEtytk'
+
+
+
+Determining if the include file limits.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-LSBpY7
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_20bdf/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_20bdf.dir/build.make CMakeFiles/cmTC_20bdf.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-LSBpY7'
+Building C object CMakeFiles/cmTC_20bdf.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_20bdf.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-LSBpY7/CheckIncludeFile.c
+Linking C executable cmTC_20bdf
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_20bdf.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_20bdf.dir/CheckIncludeFile.c.o -o cmTC_20bdf  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-LSBpY7'
+
+
+
+Determining if the include file locale.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-7DaeFK
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_04532/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_04532.dir/build.make CMakeFiles/cmTC_04532.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-7DaeFK'
+Building C object CMakeFiles/cmTC_04532.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_04532.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-7DaeFK/CheckIncludeFile.c
+Linking C executable cmTC_04532
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_04532.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_04532.dir/CheckIncludeFile.c.o -o cmTC_04532  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-7DaeFK'
+
+
+
+Determining if the include file memory.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-b8KgB6
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b9795/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b9795.dir/build.make CMakeFiles/cmTC_b9795.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-b8KgB6'
+Building C object CMakeFiles/cmTC_b9795.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_b9795.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-b8KgB6/CheckIncludeFile.c
+Linking C executable cmTC_b9795
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b9795.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_b9795.dir/CheckIncludeFile.c.o -o cmTC_b9795  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-b8KgB6'
+
+
+
+Determining if the include file stdint.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-zQdztQ
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5e00c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_5e00c.dir/build.make CMakeFiles/cmTC_5e00c.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-zQdztQ'
+Building C object CMakeFiles/cmTC_5e00c.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_5e00c.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-zQdztQ/CheckIncludeFile.c
+Linking C executable cmTC_5e00c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5e00c.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_5e00c.dir/CheckIncludeFile.c.o -o cmTC_5e00c  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-zQdztQ'
+
+
+
+Determining if the include file stdlib.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-9yTRLH
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7cb78/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7cb78.dir/build.make CMakeFiles/cmTC_7cb78.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-9yTRLH'
+Building C object CMakeFiles/cmTC_7cb78.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_7cb78.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-9yTRLH/CheckIncludeFile.c
+Linking C executable cmTC_7cb78
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7cb78.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_7cb78.dir/CheckIncludeFile.c.o -o cmTC_7cb78  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-9yTRLH'
+
+
+
+Determining if the include file sys/cdefs.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-9eb9E3
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_68cc4/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_68cc4.dir/build.make CMakeFiles/cmTC_68cc4.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-9eb9E3'
+Building C object CMakeFiles/cmTC_68cc4.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_68cc4.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-9eb9E3/CheckIncludeFile.c
+Linking C executable cmTC_68cc4
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_68cc4.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_68cc4.dir/CheckIncludeFile.c.o -o cmTC_68cc4  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-9eb9E3'
+
+
+
+Determining if the include file sys/param.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-BHUySz
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9c210/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9c210.dir/build.make CMakeFiles/cmTC_9c210.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-BHUySz'
+Building C object CMakeFiles/cmTC_9c210.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_9c210.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-BHUySz/CheckIncludeFile.c
+Linking C executable cmTC_9c210
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c210.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_9c210.dir/CheckIncludeFile.c.o -o cmTC_9c210  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-BHUySz'
+
+
+
+Determining if the include file sys/random.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-hda31E
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_15515/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_15515.dir/build.make CMakeFiles/cmTC_15515.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-hda31E'
+Building C object CMakeFiles/cmTC_15515.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_15515.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-hda31E/CheckIncludeFile.c
+Linking C executable cmTC_15515
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_15515.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_15515.dir/CheckIncludeFile.c.o -o cmTC_15515  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-hda31E'
+
+
+
+Determining if the include file sys/stat.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3LvZ9t
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f8bbb/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_f8bbb.dir/build.make CMakeFiles/cmTC_f8bbb.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3LvZ9t'
+Building C object CMakeFiles/cmTC_f8bbb.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_f8bbb.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3LvZ9t/CheckIncludeFile.c
+Linking C executable cmTC_f8bbb
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f8bbb.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_f8bbb.dir/CheckIncludeFile.c.o -o cmTC_f8bbb  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3LvZ9t'
+
+
+
+Determining if the INFINITY exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-7b7EcC
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c182d/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c182d.dir/build.make CMakeFiles/cmTC_c182d.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-7b7EcC'
+Building C object CMakeFiles/cmTC_c182d.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_c182d.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-7b7EcC/CheckSymbolExists.c
+Linking C executable cmTC_c182d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c182d.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_c182d.dir/CheckSymbolExists.c.o -o cmTC_c182d  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-7b7EcC'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <math.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef INFINITY
+  return ((int*)(&INFINITY))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the isinf exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-HogU17
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_10f23/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_10f23.dir/build.make CMakeFiles/cmTC_10f23.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-HogU17'
+Building C object CMakeFiles/cmTC_10f23.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_10f23.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-HogU17/CheckSymbolExists.c
+Linking C executable cmTC_10f23
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_10f23.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_10f23.dir/CheckSymbolExists.c.o -o cmTC_10f23  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-HogU17'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <math.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef isinf
+  return ((int*)(&isinf))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the isnan exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-lJotGN
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_bbeea/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_bbeea.dir/build.make CMakeFiles/cmTC_bbeea.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-lJotGN'
+Building C object CMakeFiles/cmTC_bbeea.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_bbeea.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-lJotGN/CheckSymbolExists.c
+Linking C executable cmTC_bbeea
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bbeea.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_bbeea.dir/CheckSymbolExists.c.o -o cmTC_bbeea  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-lJotGN'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <math.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef isnan
+  return ((int*)(&isnan))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the nan exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-DYBL9y
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9141f/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9141f.dir/build.make CMakeFiles/cmTC_9141f.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-DYBL9y'
+Building C object CMakeFiles/cmTC_9141f.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_9141f.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-DYBL9y/CheckSymbolExists.c
+Linking C executable cmTC_9141f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9141f.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_9141f.dir/CheckSymbolExists.c.o -o cmTC_9141f  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-DYBL9y'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <math.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef nan
+  return ((int*)(&nan))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the snprintf exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-r6kkLo
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_09949/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_09949.dir/build.make CMakeFiles/cmTC_09949.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-r6kkLo'
+Building C object CMakeFiles/cmTC_09949.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_09949.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-r6kkLo/CheckSymbolExists.c
+Linking C executable cmTC_09949
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_09949.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_09949.dir/CheckSymbolExists.c.o -o cmTC_09949  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-r6kkLo'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef snprintf
+  return ((int*)(&snprintf))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the vasprintf exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rRLxVc
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_34f71/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_34f71.dir/build.make CMakeFiles/cmTC_34f71.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rRLxVc'
+Building C object CMakeFiles/cmTC_34f71.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_34f71.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rRLxVc/CheckSymbolExists.c
+Linking C executable cmTC_34f71
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_34f71.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_34f71.dir/CheckSymbolExists.c.o -o cmTC_34f71  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-rRLxVc'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef vasprintf
+  return ((int*)(&vasprintf))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the vsnprintf exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-hGqswl
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_28e47/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_28e47.dir/build.make CMakeFiles/cmTC_28e47.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-hGqswl'
+Building C object CMakeFiles/cmTC_28e47.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_28e47.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-hGqswl/CheckSymbolExists.c
+Linking C executable cmTC_28e47
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_28e47.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_28e47.dir/CheckSymbolExists.c.o -o cmTC_28e47  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-hGqswl'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef vsnprintf
+  return ((int*)(&vsnprintf))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the vprintf exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-FW6erO
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_4fd56/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_4fd56.dir/build.make CMakeFiles/cmTC_4fd56.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-FW6erO'
+Building C object CMakeFiles/cmTC_4fd56.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_4fd56.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-FW6erO/CheckSymbolExists.c
+Linking C executable cmTC_4fd56
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4fd56.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_4fd56.dir/CheckSymbolExists.c.o -o cmTC_4fd56  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-FW6erO'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef vprintf
+  return ((int*)(&vprintf))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the arc4random exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Hh5cJk
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f7f88/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_f7f88.dir/build.make CMakeFiles/cmTC_f7f88.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Hh5cJk'
+Building C object CMakeFiles/cmTC_f7f88.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_f7f88.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Hh5cJk/CheckSymbolExists.c
+Linking C executable cmTC_f7f88
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f7f88.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_f7f88.dir/CheckSymbolExists.c.o -o cmTC_f7f88  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Hh5cJk'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef arc4random
+  return ((int*)(&arc4random))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the open exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-VtrZY0
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f4fc8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_f4fc8.dir/build.make CMakeFiles/cmTC_f4fc8.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-VtrZY0'
+Building C object CMakeFiles/cmTC_f4fc8.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_f4fc8.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-VtrZY0/CheckSymbolExists.c
+Linking C executable cmTC_f4fc8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f4fc8.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_f4fc8.dir/CheckSymbolExists.c.o -o cmTC_f4fc8  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-VtrZY0'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <fcntl.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef open
+  return ((int*)(&open))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the realloc exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-baX8wN
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_aa343/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_aa343.dir/build.make CMakeFiles/cmTC_aa343.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-baX8wN'
+Building C object CMakeFiles/cmTC_aa343.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_aa343.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-baX8wN/CheckSymbolExists.c
+Linking C executable cmTC_aa343
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_aa343.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_aa343.dir/CheckSymbolExists.c.o -o cmTC_aa343  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-baX8wN'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef realloc
+  return ((int*)(&realloc))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the setlocale exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fmsKz8
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3791b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_3791b.dir/build.make CMakeFiles/cmTC_3791b.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fmsKz8'
+Building C object CMakeFiles/cmTC_3791b.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_3791b.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fmsKz8/CheckSymbolExists.c
+Linking C executable cmTC_3791b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3791b.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_3791b.dir/CheckSymbolExists.c.o -o cmTC_3791b  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fmsKz8'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <locale.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef setlocale
+  return ((int*)(&setlocale))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the uselocale exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-PIENnA
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_98574/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_98574.dir/build.make CMakeFiles/cmTC_98574.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-PIENnA'
+Building C object CMakeFiles/cmTC_98574.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_98574.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-PIENnA/CheckSymbolExists.c
+Linking C executable cmTC_98574
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_98574.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_98574.dir/CheckSymbolExists.c.o -o cmTC_98574  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-PIENnA'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <locale.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef uselocale
+  return ((int*)(&uselocale))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strcasecmp exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-VTkPGD
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_88b24/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_88b24.dir/build.make CMakeFiles/cmTC_88b24.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-VTkPGD'
+Building C object CMakeFiles/cmTC_88b24.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_88b24.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-VTkPGD/CheckSymbolExists.c
+Linking C executable cmTC_88b24
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_88b24.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_88b24.dir/CheckSymbolExists.c.o -o cmTC_88b24  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-VTkPGD'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <strings.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strcasecmp
+  return ((int*)(&strcasecmp))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strncasecmp exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3PemAc
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_dd6bf/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_dd6bf.dir/build.make CMakeFiles/cmTC_dd6bf.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3PemAc'
+Building C object CMakeFiles/cmTC_dd6bf.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_dd6bf.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3PemAc/CheckSymbolExists.c
+Linking C executable cmTC_dd6bf
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dd6bf.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_dd6bf.dir/CheckSymbolExists.c.o -o cmTC_dd6bf  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-3PemAc'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <strings.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strncasecmp
+  return ((int*)(&strncasecmp))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strdup exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-L0UUFN
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9efcf/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9efcf.dir/build.make CMakeFiles/cmTC_9efcf.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-L0UUFN'
+Building C object CMakeFiles/cmTC_9efcf.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_9efcf.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-L0UUFN/CheckSymbolExists.c
+Linking C executable cmTC_9efcf
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9efcf.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_9efcf.dir/CheckSymbolExists.c.o -o cmTC_9efcf  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-L0UUFN'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strdup
+  return ((int*)(&strdup))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strerror exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Tm827n
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b94ab/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b94ab.dir/build.make CMakeFiles/cmTC_b94ab.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Tm827n'
+Building C object CMakeFiles/cmTC_b94ab.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_b94ab.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Tm827n/CheckSymbolExists.c
+Linking C executable cmTC_b94ab
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b94ab.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_b94ab.dir/CheckSymbolExists.c.o -o cmTC_b94ab  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Tm827n'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strerror
+  return ((int*)(&strerror))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the vsyslog exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-56Mjs5
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_61b48/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_61b48.dir/build.make CMakeFiles/cmTC_61b48.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-56Mjs5'
+Building C object CMakeFiles/cmTC_61b48.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_61b48.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-56Mjs5/CheckSymbolExists.c
+Linking C executable cmTC_61b48
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_61b48.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_61b48.dir/CheckSymbolExists.c.o -o cmTC_61b48  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-56Mjs5'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <syslog.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef vsyslog
+  return ((int*)(&vsyslog))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the getrandom exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fOQJLx
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_62f65/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_62f65.dir/build.make CMakeFiles/cmTC_62f65.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fOQJLx'
+Building C object CMakeFiles/cmTC_62f65.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_62f65.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fOQJLx/CheckSymbolExists.c
+Linking C executable cmTC_62f65
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62f65.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_62f65.dir/CheckSymbolExists.c.o -o cmTC_62f65  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-fOQJLx'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <sys/random.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef getrandom
+  return ((int*)(&getrandom))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the getrusage exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-NxdfZE
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_bfd55/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_bfd55.dir/build.make CMakeFiles/cmTC_bfd55.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-NxdfZE'
+Building C object CMakeFiles/cmTC_bfd55.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_bfd55.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-NxdfZE/CheckSymbolExists.c
+Linking C executable cmTC_bfd55
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bfd55.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_bfd55.dir/CheckSymbolExists.c.o -o cmTC_bfd55  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-NxdfZE'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <sys/resource.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef getrusage
+  return ((int*)(&getrusage))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strtoll exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-piUieE
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fb30e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fb30e.dir/build.make CMakeFiles/cmTC_fb30e.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-piUieE'
+Building C object CMakeFiles/cmTC_fb30e.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_fb30e.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-piUieE/CheckSymbolExists.c
+Linking C executable cmTC_fb30e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fb30e.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_fb30e.dir/CheckSymbolExists.c.o -o cmTC_fb30e  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-piUieE'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strtoll
+  return ((int*)(&strtoll))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the strtoull exist passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-bdJN2R
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_6133c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_6133c.dir/build.make CMakeFiles/cmTC_6133c.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-bdJN2R'
+Building C object CMakeFiles/cmTC_6133c.dir/CheckSymbolExists.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_6133c.dir/CheckSymbolExists.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-bdJN2R/CheckSymbolExists.c
+Linking C executable cmTC_6133c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6133c.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_6133c.dir/CheckSymbolExists.c.o -o cmTC_6133c  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-bdJN2R'
+
+
+File CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef strtoull
+  return ((int*)(&strtoull))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the include file stddef.h exists passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Z3Kgg0
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_be9fd/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_be9fd.dir/build.make CMakeFiles/cmTC_be9fd.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Z3Kgg0'
+Building C object CMakeFiles/cmTC_be9fd.dir/CheckIncludeFile.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_be9fd.dir/CheckIncludeFile.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Z3Kgg0/CheckIncludeFile.c
+Linking C executable cmTC_be9fd
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_be9fd.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_be9fd.dir/CheckIncludeFile.c.o -o cmTC_be9fd  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Z3Kgg0'
+
+
+
+Determining size of int passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-GkBC4q
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e2d61/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_e2d61.dir/build.make CMakeFiles/cmTC_e2d61.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-GkBC4q'
+Building C object CMakeFiles/cmTC_e2d61.dir/SIZEOF_INT.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_e2d61.dir/SIZEOF_INT.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-GkBC4q/SIZEOF_INT.c
+Linking C executable cmTC_e2d61
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e2d61.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_e2d61.dir/SIZEOF_INT.c.o -o cmTC_e2d61  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-GkBC4q'
+
+
+
+Determining size of int64_t passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-ADOhxu
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9b74b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9b74b.dir/build.make CMakeFiles/cmTC_9b74b.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-ADOhxu'
+Building C object CMakeFiles/cmTC_9b74b.dir/SIZEOF_INT64_T.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_9b74b.dir/SIZEOF_INT64_T.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-ADOhxu/SIZEOF_INT64_T.c
+Linking C executable cmTC_9b74b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9b74b.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_9b74b.dir/SIZEOF_INT64_T.c.o -o cmTC_9b74b  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-ADOhxu'
+
+
+
+Determining size of long passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-UBqpsk
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_45ae4/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_45ae4.dir/build.make CMakeFiles/cmTC_45ae4.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-UBqpsk'
+Building C object CMakeFiles/cmTC_45ae4.dir/SIZEOF_LONG.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_45ae4.dir/SIZEOF_LONG.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-UBqpsk/SIZEOF_LONG.c
+Linking C executable cmTC_45ae4
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_45ae4.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_45ae4.dir/SIZEOF_LONG.c.o -o cmTC_45ae4  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-UBqpsk'
+
+
+
+Determining size of long long passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-SCTz79
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b98c4/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b98c4.dir/build.make CMakeFiles/cmTC_b98c4.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-SCTz79'
+Building C object CMakeFiles/cmTC_b98c4.dir/SIZEOF_LONG_LONG.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_b98c4.dir/SIZEOF_LONG_LONG.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-SCTz79/SIZEOF_LONG_LONG.c
+Linking C executable cmTC_b98c4
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b98c4.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_b98c4.dir/SIZEOF_LONG_LONG.c.o -o cmTC_b98c4  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-SCTz79'
+
+
+
+Determining size of size_t passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-WiMcym
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_894e0/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_894e0.dir/build.make CMakeFiles/cmTC_894e0.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-WiMcym'
+Building C object CMakeFiles/cmTC_894e0.dir/SIZEOF_SIZE_T.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_894e0.dir/SIZEOF_SIZE_T.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-WiMcym/SIZEOF_SIZE_T.c
+Linking C executable cmTC_894e0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_894e0.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_894e0.dir/SIZEOF_SIZE_T.c.o -o cmTC_894e0  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-WiMcym'
+
+
+
+Determining size of ssize_t passed with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-4JLSes
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fa574/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fa574.dir/build.make CMakeFiles/cmTC_fa574.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-4JLSes'
+Building C object CMakeFiles/cmTC_fa574.dir/SIZEOF_SSIZE_T.c.o
+/usr/bin/cc -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_fa574.dir/SIZEOF_SSIZE_T.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-4JLSes/SIZEOF_SSIZE_T.c
+Linking C executable cmTC_fa574
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fa574.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_fa574.dir/SIZEOF_SSIZE_T.c.o -o cmTC_fa574  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-4JLSes'
+
+
+
+Performing C SOURCE FILE Test HAVE_ATOMIC_BUILTINS succeeded with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-6d7ZCa
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_8cb03/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_8cb03.dir/build.make CMakeFiles/cmTC_8cb03.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-6d7ZCa'
+Building C object CMakeFiles/cmTC_8cb03.dir/src.c.o
+/usr/bin/cc -DHAVE_ATOMIC_BUILTINS -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_8cb03.dir/src.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-6d7ZCa/src.c
+Linking C executable cmTC_8cb03
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8cb03.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_8cb03.dir/src.c.o -o cmTC_8cb03  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-6d7ZCa'
+
+
+Source file was:
+int main() { int i, x = 0; i = __sync_add_and_fetch(&x,1); return x; }
+
+Performing C SOURCE FILE Test HAVE___THREAD succeeded with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-8ZocCA
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fda4c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fda4c.dir/build.make CMakeFiles/cmTC_fda4c.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-8ZocCA'
+Building C object CMakeFiles/cmTC_fda4c.dir/src.c.o
+/usr/bin/cc -DHAVE___THREAD -D_GNU_SOURCE  -fPIE -o CMakeFiles/cmTC_fda4c.dir/src.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-8ZocCA/src.c
+Linking C executable cmTC_fda4c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fda4c.dir/link.txt --verbose=1
+/usr/bin/cc CMakeFiles/cmTC_fda4c.dir/src.c.o -o cmTC_fda4c  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-8ZocCA'
+
+
+Source file was:
+__thread int x = 0; int main() { return 0; }
+
+Performing C SOURCE FILE Test REENTRANT_WORKS succeeded with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Miyqaz
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b2b72/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b2b72.dir/build.make CMakeFiles/cmTC_b2b72.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Miyqaz'
+Building C object CMakeFiles/cmTC_b2b72.dir/src.c.o
+/usr/bin/cc -DREENTRANT_WORKS -D_GNU_SOURCE  -ffunction-sections -fdata-sections -Werror -Wall -Wcast-qual -Wno-error=deprecated-declarations -Wextra -Wwrite-strings -Wno-unused-parameter -Wstrict-prototypes  -fPIE -o CMakeFiles/cmTC_b2b72.dir/src.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Miyqaz/src.c
+Linking C executable cmTC_b2b72
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b2b72.dir/link.txt --verbose=1
+/usr/bin/cc  -ffunction-sections -fdata-sections -Werror -Wall -Wcast-qual -Wno-error=deprecated-declarations -Wextra -Wwrite-strings -Wno-unused-parameter -Wstrict-prototypes  CMakeFiles/cmTC_b2b72.dir/src.c.o -o cmTC_b2b72  -lm 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-Miyqaz'
+
+
+Source file was:
+
+	/* uClibc toolchains without threading barf when _REENTRANT is defined */
+	#define _REENTRANT 1
+	#include <sys/types.h>
+	int main (void)
+	{
+	  return 0;
+	}
+	
+
+Performing C SOURCE FILE Test BSYMBOLIC_WORKS succeeded with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-6uH1En
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0f2b2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_0f2b2.dir/build.make CMakeFiles/cmTC_0f2b2.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-6uH1En'
+Building C object CMakeFiles/cmTC_0f2b2.dir/src.c.o
+/usr/bin/cc -DBSYMBOLIC_WORKS -D_GNU_SOURCE  -ffunction-sections -fdata-sections -Werror -Wall -Wcast-qual -Wno-error=deprecated-declarations -Wextra -Wwrite-strings -Wno-unused-parameter -Wstrict-prototypes  -fPIE -o CMakeFiles/cmTC_0f2b2.dir/src.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-6uH1En/src.c
+Linking C executable cmTC_0f2b2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f2b2.dir/link.txt --verbose=1
+/usr/bin/cc  -ffunction-sections -fdata-sections -Werror -Wall -Wcast-qual -Wno-error=deprecated-declarations -Wextra -Wwrite-strings -Wno-unused-parameter -Wstrict-prototypes  CMakeFiles/cmTC_0f2b2.dir/src.c.o -o cmTC_0f2b2  -lm -Wl,-Bsymbolic-functions 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-6uH1En'
+
+
+Source file was:
+
+	int main (void)
+	{
+	  return 0;
+	}
+	
+
+Performing C SOURCE FILE Test VERSION_SCRIPT_WORKS succeeded with the following output:
+Change Dir: /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-qT0Kv5
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_78a57/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_78a57.dir/build.make CMakeFiles/cmTC_78a57.dir/build
+gmake[1]: Entering directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-qT0Kv5'
+Building C object CMakeFiles/cmTC_78a57.dir/src.c.o
+/usr/bin/cc -DVERSION_SCRIPT_WORKS -D_GNU_SOURCE  -ffunction-sections -fdata-sections -Werror -Wall -Wcast-qual -Wno-error=deprecated-declarations -Wextra -Wwrite-strings -Wno-unused-parameter -Wstrict-prototypes  -fPIE -o CMakeFiles/cmTC_78a57.dir/src.c.o -c /home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-qT0Kv5/src.c
+Linking C executable cmTC_78a57
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_78a57.dir/link.txt --verbose=1
+/usr/bin/cc  -ffunction-sections -fdata-sections -Werror -Wall -Wcast-qual -Wno-error=deprecated-declarations -Wextra -Wwrite-strings -Wno-unused-parameter -Wstrict-prototypes  CMakeFiles/cmTC_78a57.dir/src.c.o -o cmTC_78a57  -lm -Wl,--version-script,/home/emdc/EMDC/3rdParty/json-c-build/check-version-script.sym 
+gmake[1]: Leaving directory '/home/emdc/EMDC/3rdParty/json-c-build/CMakeFiles/CMakeScratch/TryCompile-qT0Kv5'
+
+
+Source file was:
+
+	int main (void)
+	{
+	  return 0;
+	}
+	
+
