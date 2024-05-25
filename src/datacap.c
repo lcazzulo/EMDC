@@ -1,5 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
 #include <signal.h>
 #include <limits.h>
 #include <sys/time.h>
@@ -14,7 +16,6 @@
 #include "defines.h"
 #include "list.h"
 #include "queue.h"
-#include "xml.h"
 
 #define MIN_INTERVAL_MILLI 1000
 #define MAX_INTERVAL_MILLI 30000
@@ -86,6 +87,10 @@ int main (int argc, char *argv[])
                                 printf ("error %d [%s] in setgid()\n", errno, strerror(errno));
                         }
                 }
+		else
+		{
+			printf ("please set \"DC_GROUP\" environment variable\r\n"); 
+		}
 		char* p_user = getenv ("DC_USER");
                 if (p_user != NULL)
                 {
@@ -97,6 +102,10 @@ int main (int argc, char *argv[])
                         {
                                 printf ("error %d [%s] in setuid()\n", errno, strerror(errno));
                         }
+                }
+		else
+                {
+                        printf ("please set \"DC_USER\" environment variable\r\n");
                 }
 
                 /*******************************************************/
@@ -120,14 +129,12 @@ void process_cmd_line (int argc, char *argv[])
 	while (1)
 	{
 		int option_index = 0;
-     
            	ch = getopt_long (argc, argv, "i:t::", long_options, &option_index);
 		/* Detect the end of the options. */
            	if (ch == -1)
 		{
              		break;
 		}
-     
            	switch (ch)
 		{
 		case 'i':
@@ -151,8 +158,8 @@ void process_test_arg ()
 	globals.test_mode = 1;
 	globals.min_test_interval_milli = MIN_INTERVAL_MILLI;
         globals.max_test_interval_milli = MAX_INTERVAL_MILLI;
-	
-	if (optarg != NULL)	
+
+	if (optarg != NULL)
 	{
 		printf ("option -t with value [%s]\n", optarg);
 		char* pos = strchr (optarg, '-');
@@ -176,8 +183,8 @@ void process_test_arg ()
 					globals.min_test_interval_milli = val1;
         				globals.max_test_interval_milli = val2;	
 				}
-			}	
-		}	
+			}
+		}
 		else if (pos == NULL)
 		{
 			globals.min_test_interval_milli = globals.max_test_interval_milli = atoi (optarg);
@@ -195,8 +202,8 @@ void process_dc_id_arg ()
 	{
 		printf ("--dc-id must be between 0 and 255\n");
                 exit (-1);
-	}	
-        globals.dc_id = i; 
+	}
+        globals.dc_id = i;
 }
 
 int init (int argc, char *argv[])
@@ -254,7 +261,7 @@ int init (int argc, char *argv[])
 	}
 
 	zlog_info(c, "dc_id=[%d]", globals.dc_id);
-	
+
 	snprintf (globals.init_file_path, sizeof (globals.init_file_path) - 1, "%s/etc/emdc.conf", globals.EMDC_HOME);
         zlog_info(c, "init file path [%s]", globals.init_file_path);
 	ini = iniparser_load(globals.init_file_path);
@@ -289,15 +296,13 @@ int init (int argc, char *argv[])
 
         /* open the receiving message queue */
         globals.queue_out = EMDC_queue_init (EMDC_QUEUE_IN_NAME, O_WRONLY, 1, -1, -1);
-	EMDC_xml_init ();
         signal(SIGINT, signal_callback_handler);
         signal(SIGTERM, signal_callback_handler);
 
 	if (globals.test_mode == 0)
 	{
-		
 		pinMode (globals.gpio_ra, INPUT);
-		zlog_info (c, "pin [%d] mode set to INPUT", globals.gpio_ra);	
+		zlog_info (c, "pin [%d] mode set to INPUT", globals.gpio_ra);
 		ra_pin_status = digitalRead (globals.gpio_ra);
 		zlog_info (c, "detected status %s for pin [%d]", ra_pin_status == LOW ? "LOW" : "HIGH", globals.gpio_ra);
 		pinMode (globals.gpio_rr, INPUT);
@@ -324,7 +329,7 @@ int main_loop ()
 		if (globals.test_mode == 0)
 		{
 			zlog_info (c, "waiting for events ...");
-			sleep (10); 
+			sleep (10);
 		}
 		else
 		{
@@ -342,7 +347,6 @@ int fini ()
         {
                 zlog_info(c, "got signal [%d], %s", signum, strsignal(signum));
         }
-	EMDC_xml_release ();
         zlog_info (c, "datacap exits");
         zlog_fini ();
         return 0;
@@ -351,7 +355,7 @@ int fini ()
 int sendmsg (int id, int rarr)
 {
 	int ret;
-	long long time_in_milli;	
+	long long time_in_milli;
 	struct timeval tv;
 	struct timezone tz;
 
@@ -373,9 +377,11 @@ int sendmsg (int id, int rarr)
 
 	zlog_debug (c, "time in milli [%lld]", time_in_milli);
 
+	/*
+	=== OLD VERSION ===
 	EMDCmsg* m = init_message (EMDCrequest);
 	EMDCsamples *ss = init_samples (EMDCinsert, -1);
-	add_sample(ss, time_in_milli, id, rarr);	
+	add_sample(ss, time_in_milli, id, rarr);
 	add_samples (m, ss);
 
 	char *xmlRet = EMDC_xml_build (m);
@@ -392,10 +398,16 @@ int sendmsg (int id, int rarr)
 			zlog_fatal (c, "error %d [%s] in mq_send()", errno, strerror(errno));
 		}
 		exit (-1);
-	}	
+	}
 	free (xmlRet);
 	free_message (m);
 	free (m);
+	*/
+
+	/*
+	=== NEW VERSION
+	send a json message to globals.queue_out
+	*/
 	return 0;
 }
 
@@ -409,7 +421,7 @@ void sleep_randomically ()
 	else
 	{
 		v = globals.min_test_interval_milli;
-	} 
+	}
 	usleep (v * 1000L);
 }
 
@@ -418,7 +430,7 @@ void wiringPi_callback_ra (void)
 	int ra_pin_status_now = digitalRead (globals.gpio_ra);
 
 	zlog_debug(c, "status detected now in pin %d is %s",  globals.gpio_ra, ra_pin_status_now == LOW ? "LOW" : "HIGH");
-		
+
 	if (ra_pin_status == LOW && ra_pin_status_now == HIGH)
 	{
 		zlog_info(c, "detected change LOW->HIGH in pin %d", globals.gpio_ra);
@@ -437,14 +449,14 @@ void wiringPi_callback_ra (void)
 
 void wiringPi_callback_rr (void)
 {
-	int rr_pin_status_now = digitalRead (globals.gpio_rr);        
+	int rr_pin_status_now = digitalRead (globals.gpio_rr);
 
 	zlog_debug(c, "status detected now in pin %d is %s",  globals.gpio_rr, rr_pin_status_now == LOW ? "LOW" : "HIGH");
 
 	if (rr_pin_status == LOW && rr_pin_status_now == HIGH)
         {
                 zlog_info(c, "detected change LOW->HIGH in pin %d", globals.gpio_rr);
-        }       
+        }
         else if (rr_pin_status == HIGH && rr_pin_status_now == LOW)
         {
                 zlog_info(c, "detected change HIGH->LOW in pin %d", globals.gpio_rr);
