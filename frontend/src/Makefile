@@ -2,6 +2,8 @@ CC=gcc
 
 LIB_INIPARSER_INCLUDE=/usr/local/include/iniparser
 
+LIB_JSON_C_INCLUDE=/usr/local/include/json-c
+
 LIBXML2_INCLUDE=/usr/include/libxml2
 LIBSQLITE3_INCLUDE=/usr/local/include
 
@@ -11,11 +13,8 @@ LIBSQLITE3_LIB=/usr/local/lib
 OBJ_PATH=../bin/obj
 BIN_PATH=../bin
 
-${OBJ_PATH}/list.o : list.c list.h
-	${CC} -c -o ${OBJ_PATH}/list.o list.c
-
-${OBJ_PATH}/xml.o : xml.h list.h xml.c
-	${CC} -I${LIBXML2_INCLUDE} -c -o ${OBJ_PATH}/xml.o xml.c
+${OBJ_PATH}/my_json.o : my_json.c my_json.h
+	${CC} -I${LIB_JSON_C_INCLUDE} -c -o ${OBJ_PATH}/my_json.o my_json.c
 
 ${OBJ_PATH}/sql.o : sql.h list.h sql.c
 	${CC} -I${LIBSQLITE3_INCLUDE} -c -o ${OBJ_PATH}/sql.o sql.c
@@ -25,7 +24,7 @@ ${OBJ_PATH}/queue.o : queue.h queue.c
 
 ${OBJ_PATH}/http.o : http.h http.c
 	${CC} -c -o ${OBJ_PATH}/http.o http.c
- 
+
 ${OBJ_PATH}/dbmgr.o : dbmgr.c sql.h xml.h defines.h queue.h
 	${CC} -c -o ${OBJ_PATH}/dbmgr.o dbmgr.c
 
@@ -43,9 +42,9 @@ ${BIN_PATH}/EMDCdbmgr : ${OBJ_PATH}/dbmgr.o ${OBJ_PATH}/sql.o ${OBJ_PATH}/xml.o 
                 ${OBJ_PATH}/xml.o ${OBJ_PATH}/list.o -L${LIBSQLITE3_LIB} \
 		-lsqlite3 -lxml2 -lzlog -liniparser -lpthread -lrt
 
-${BIN_PATH}/EMDCdatacap : ${OBJ_PATH}/datacap.o ${OBJ_PATH}/list.o ${OBJ_PATH}/queue.o
+${BIN_PATH}/EMDCdatacap : ${OBJ_PATH}/datacap.o ${OBJ_PATH}/queue.o ${OBJ_PATH}/my_json.o
 	${CC} -o ${BIN_PATH}/EMDCdatacap ${OBJ_PATH}/datacap.o ${OBJ_PATH}/queue.o \
-        ${OBJ_PATH}/list.o -lwiringPi -lzlog -liniparser -lpthread -lrt
+        ${OBJ_PATH}/my_json.o -lwiringPi -lzlog -liniparser -ljson-c -lpthread -lrt
 
 ${BIN_PATH}/EMDCdatasnd : ${OBJ_PATH}/datasnd.o ${OBJ_PATH}/xml.o ${OBJ_PATH}/list.o ${OBJ_PATH}/queue.o ${OBJ_PATH}/http.o
 	${CC} -o ${BIN_PATH}/EMDCdatasnd ${OBJ_PATH}/datasnd.o ${OBJ_PATH}/queue.o \
@@ -59,6 +58,12 @@ ${OBJ_PATH}/test_list.o : tests/test_list.c list.h
 
 ${BIN_PATH}/tests/test_list : ${OBJ_PATH}/test_list.o ${OBJ_PATH}/list.o
 	${CC} -o ${BIN_PATH}/tests/test_list ${OBJ_PATH}/test_list.o ${OBJ_PATH}/list.o
+
+${OBJ_PATH}/test_json.o : tests/test_json.c my_json.h
+	${CC} -I${LIB_JSON_C_INCLUDE} -c -o ${OBJ_PATH}/test_json.o tests/test_json.c
+
+${BIN_PATH}/tests/test_json : ${OBJ_PATH}/test_json.o ${OBJ_PATH}/my_json.o
+	${CC} -o ${BIN_PATH}/tests/test_json ${OBJ_PATH}/test_json.o ${OBJ_PATH}/my_json.o -ljson-c -lzlog -lpthread
 
 ${OBJ_PATH}/test_xml.o : tests/test_xml.c xml.h list.h
 	${CC} -c -o ${OBJ_PATH}/test_xml.o tests/test_xml.c

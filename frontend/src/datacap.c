@@ -14,8 +14,8 @@
 #include <iniparser.h>
 #include <wiringPi.h>
 #include "defines.h"
-#include "list.h"
 #include "queue.h"
+#include "my_json.h"
 
 #define MIN_INTERVAL_MILLI 1000
 #define MAX_INTERVAL_MILLI 30000
@@ -408,6 +408,27 @@ int sendmsg (int id, int rarr)
 	=== NEW VERSION
 	send a json message to globals.queue_out
 	*/
+	char buff[1024];
+	EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
+	sample->ts = time_in_milli;
+	sample->dc_id = id;
+	sample->rarr = rarr;
+     	sample_to_json (sample, buff);
+	zlog_info (c, "enqueuing msg to dbmgr: %s", buff);
+	ret = EMDC_queue_send (globals.queue_out, buff);
+	if (ret != 0)
+        {
+                if (errno == EAGAIN)
+                {
+                        zlog_fatal (c, "queue is full. Exiting");
+                }
+                else
+                {
+                        zlog_fatal (c, "error %d [%s] in mq_send()", errno, strerror(errno));
+                }
+                exit (-1);
+        }
+	free (sample);
 	return 0;
 }
 
