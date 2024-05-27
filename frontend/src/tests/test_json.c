@@ -6,7 +6,7 @@
 
 zlog_category_t *c = NULL;
 
-const char* json_string = "{\"ts\": 1716724056419, \"dc_id\": 1, \"rarr\": 0}";
+const char* json_string = "{\"ts\": 1716724056419, \"dc_id\": 1, \"rarr\": 0, \"status\": 1}";
 
 void init ()
 {
@@ -33,9 +33,10 @@ int main(int argc, char* argv[])
 
         EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
 	sample_from_json(sample, json_string);
-	printf ("ts 	[%lld]\r\n", sample->ts);
-	printf ("dc_id 	[%d]\r\n", sample->dc_id);
-	printf ("rarr 	[%d]\r\n", sample->rarr);
+	printf ("ts     [%lld]\r\n", sample->ts);
+	printf ("dc_id  [%d]\r\n", sample->dc_id);
+	printf ("rarr   [%d]\r\n", sample->rarr);
+	printf ("status [%d]\r\n", sample->status);
 
 	char buff[1024];
 	sample_to_json (sample, buff);

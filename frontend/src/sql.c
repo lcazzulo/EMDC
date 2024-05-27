@@ -10,13 +10,13 @@ extern zlog_category_t *c;
 static sqlite3 *pDb = NULL;
 
 /* statement insert */
-static const char szInsert[] = "insert into samples values ( ?, ?, ? )";
+static const char szInsert[] = "insert into samples values ( ?, ?, ?, ? )";
 
 /* handle statement insert */
 static sqlite3_stmt *pInsert = NULL;
 
 /* statement select */
-static const char szSelect[] = "select sample_ts, dc_id, rarr_flag from samples";
+static const char szSelect[] = "select sample_ts, dc_id, rarr_flag, status from samples";
 
 /* handle statement select */
 static sqlite3_stmt *pSelect = NULL;
@@ -26,6 +26,12 @@ static const char szDelete[] = "delete from samples where sample_ts = ? and dc_i
 
 /* handle statement delete */
 static sqlite3_stmt *pDelete = NULL;
+
+/* statement update */
+static const char szUpdate[] = "update samples set status = ? where sample_ts = ? and dc_id = ? and rarr_flag = ?";
+
+/* handle statement update */
+static sqlite3_stmt *pUpdate = NULL;
 
 /* statement begin transaction */
 static const char szBegin[] = "begin transaction";
@@ -50,6 +56,7 @@ static const char szCreateTable[] = "create table samples ( "
 	"sample_ts integer not null, "
 	"dc_id integer not null, "
 	"rarr_flag integer not null, "
+        "status integer not null, "
 	"primary key (sample_ts, dc_id, rarr_flag))";
 
 int prepare_statements ();
@@ -92,7 +99,7 @@ int EMDC_sql_init (const char* sql_db, short in_memory)
 	{
 		sqlite3_close (pDb);
 		return -1;
-	}	
+	}
 	return 0;
 }
 
@@ -111,7 +118,7 @@ int EMDC_sql_release ()
 int EMDC_sql_begin_tnx ()
 {
 	int ret, rc;
-	ret = 0;	
+	ret = 0;
 	rc = sqlite3_step(pBegin);
 	if ( rc !=  SQLITE_DONE )
 	{
@@ -179,13 +186,13 @@ int EMDC_sql_rollback_tnx ()
 	return ret;
 }
 
-int EMDC_sql_insert (long long val, int dc_id, int rarr)
+int EMDC_sql_insert (long long val, int dc_id, int rarr, int status)
 {
 	int ret, rc;
 	ret = 0;
 
 	rc = sqlite3_bind_int64 ( pInsert, 1, val );
-	if ( rc != SQLITE_OK ) 
+	if ( rc != SQLITE_OK )
 	{
 		zlog_error (c, "error [%d] - %s in sqlite3_bind_int64()", rc, sqlite3_errmsg (pDb));
 		ret = -1;
@@ -275,6 +282,7 @@ int EMDC_sql_delete (long long val, int dc_id, int rarr)
         return ret;	
 }
 
+/*
 EMDCmsg* EMDC_sql_select (int num)
 {
 	int ret;
@@ -295,12 +303,6 @@ EMDCmsg* EMDC_sql_select (int num)
 		}
 		else
 		{
-			/*
-			break when
-			ret != SQLITE_ROW
-			or
-			num != -1 and count == num
-			*/
 			if (ret == SQLITE_DONE)
 			{
 				zlog_debug (c, "end of fetch");
@@ -328,11 +330,11 @@ EMDCmsg* EMDC_sql_select (int num)
         }
 	return m;
 }
-
+*/
 int prepare_statements ()
 {
 	int ret;
-	
+
 	/*************************************************************************************************/
 	/* INSERT ****************************************************************************************/
 	ret =  sqlite3_prepare_v2(
@@ -396,7 +398,7 @@ int prepare_statements ()
 				&pBegin,  			/* OUT: Statement handle */
 				NULL 				/* OUT: Pointer to unused portion of zSql */
 	);
-	
+
 	if (pBegin == NULL || ret != SQLITE_OK)
 	{
 		zlog_error (c, "error [%d] in sqlite3_prepare_v2() for statement \"%s\"", ret, szBegin);
@@ -417,7 +419,7 @@ int prepare_statements ()
 				&pCommit,  			/* OUT: Statement handle */
 				NULL 				/* OUT: Pointer to unused portion of zSql */
 	);
-	
+
 	if (pCommit == NULL || ret != SQLITE_OK)
 	{
                 zlog_error (c, "error [%d] in sqlite3_prepare_v2() for statement \"%s\"", ret, szCommit);

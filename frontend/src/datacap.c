@@ -413,6 +413,7 @@ int sendmsg (int id, int rarr)
 	sample->ts = time_in_milli;
 	sample->dc_id = id;
 	sample->rarr = rarr;
+	sample->status = STATUS_TO_DELIVER;
      	sample_to_json (sample, buff);
 	zlog_info (c, "enqueuing msg to dbmgr: %s", buff);
 	ret = EMDC_queue_send (globals.queue_out, buff);

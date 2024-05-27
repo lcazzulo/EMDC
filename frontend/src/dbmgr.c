@@ -8,10 +8,11 @@
 #include <iniparser.h>
 
 #include "defines.h"
-#include "list.h"
+//#include "list.h"
+#include "sample.h"
 #include "queue.h"
-#include "xml.h"
 #include "sql.h"
+#include "my_json.h"
 
 zlog_category_t *c = NULL;
 
@@ -33,16 +34,16 @@ static int signum = 0;
 static EMDC_dbmgr_globals globals;
 static int commit_count = 0;
 static int do_commit_on_timer = 0;
-static int max_samples; 
+static int max_samples;
 
 int init ();
 int init_timer ();
 int main_loop ();
 int fini ();
 int process_msg (const char* msg);
-int process_msg_insert (EMDCsamples* ss);
-int process_msg_delete (EMDCsamples* ss);
-int process_msg_select (EMDCsamples* ss);
+int process_msg_insert (EMDCsample* sample);
+int process_msg_update (EMDCsample* sample);
+//int process_msg_select (EMDCsample* sample);
 
 void timer_handler(int sig, siginfo_t *si, void *uc)
 {
@@ -66,7 +67,7 @@ int main (int argc, char *argv[])
 int init ()
 {
 	int rc;
-	char* s;
+	const char* s;
 	char* emdc_home;
 	dictionary* ini = NULL;
 
@@ -83,8 +84,8 @@ int init ()
 
 	snprintf (globals.log_conf_file_path, sizeof (globals.log_conf_file_path) - 1, "%s/etc/log.conf", globals.EMDC_HOME)
 	;
-	printf ("log conf file path [%s]\n", globals.log_conf_file_path);		
-	
+	printf ("log conf file path [%s]\n", globals.log_conf_file_path);
+
 	rc = zlog_init(globals.log_conf_file_path);
         if (rc)
         {
@@ -108,7 +109,7 @@ int init ()
                 zlog_fatal (c, "cannot parse ini file [%s]", globals.init_file_path);
                 exit(-1);
         }
-	
+
 	/* open the receiving message queue */
 	globals.queue_in = EMDC_queue_init (EMDC_QUEUE_IN_NAME, O_RDONLY, 0, 5000, 8192);
 	/* open the sending message queue */
@@ -116,7 +117,7 @@ int init ()
 	/*
                 calcolo aprossimativo per determinare il massimo numero di campioni
                 che si possono inserire in una risposta a un comando si "SELECT":
-                
+
                 110 lunglezza di
                 <?xml version="1.0" encoding="UTF-8"?>
                 <Message type="response"><Samples action="SELECT"></Samples></Message>
@@ -140,7 +141,7 @@ int init ()
 	}
 	else
 	{
-		s = iniparser_getstring(ini, "DBMGR:DB_FILE_PATH", NULL);	
+		s = iniparser_getstring(ini, "DBMGR:DB_FILE_PATH", NULL);
 		if (s == NULL)
 		{
 			zlog_fatal (c, "cannot find entry [DBMGR]DB_FILE_PATH in ini file [%s]", globals.init_file_path);
@@ -164,9 +165,8 @@ int init ()
 	if (globals.max_commit > 1)
 	{
 		init_timer ();
-	}	
-	EMDC_xml_init ();
-	iniparser_freedict(ini);	
+	}
+	iniparser_freedict(ini);
 	zlog_info(c, "dbmgr started");
 	return 0;
 }
@@ -224,7 +224,7 @@ int init_timer ()
 int main_loop ()
 {
 	int msg_length = EMDC_get_queue_msg_length (globals.queue_in);
-	char* buffer_in = (char*) malloc (msg_length); 
+	char* buffer_in = (char*) malloc (msg_length);
 	while (go)
 	{
 		memset ((void*) buffer_in, '\x0', msg_length);
@@ -264,10 +264,9 @@ int fini ()
 	{
 		EMDC_sql_commit_tnx();
 	}
-	EMDC_xml_release ();
 	ret = EMDC_sql_release ();
 	if (ret)
-	{	
+	{
 		zlog_error (c, "error in EMDC_sql_release()");
 	}
 	EMDC_queue_release (globals.queue_in);
@@ -279,94 +278,56 @@ int fini ()
 
 int process_msg (const char* str)
 {
-	EMDCsamples *ss = NULL;
-	EMDCmsg *m = EMDC_xml_parse (str);
-	if (m != NULL)
+	EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
+        sample_from_json(sample, str);
+	if (sample != NULL)
 	{
-		if (m->type == EMDCresponse)
+		if (sample->status == STATUS_TO_DELIVER)
 		{
-			zlog_error (c, "received message of type \"response\", discarding");
-			return -1;
+			// save sample in local db
+			zlog_info (c, "inserting new sample message ...");
+			process_msg_insert (sample);
+                        // send sample to EMDCpublisher
+                        EMDC_queue_send (globals.queue_out, str);
 		}
-		ss = m->head;
-		while (ss != NULL)
+		else if (sample->status == STATUS_DELIVERED || sample->status == STATUS_NOT_DELIVERED)
 		{
-			if (ss->a == EMDCinsert)
-			{
-				zlog_info (c, "processing INSERT message ...");
-				process_msg_insert (ss);	
-			}
-			else if (ss->a == EMDCdelete)
-			{
-				zlog_info (c, "processing DELETE message ...");
-				process_msg_delete (ss);	
-			}
-			else
-			{
-				zlog_info (c, "processing SELECT message ...");
-				process_msg_select (ss);
-			}
-			ss = ss->next;
+			// update status to DELIVERED or NOT_DELIVERED in local db
+			zlog_info (c, "updating sample message with status %s ...", sample->status == STATUS_DELIVERED ? "DELIVERED" : "NOT_DELIVERED");
+                        process_msg_update (sample);
 		}
-		free_message (m);
-		free (m);
-	}	
+
+	}
 	return 0;
 }
 
-int process_msg_insert (EMDCsamples* ss)
+int process_msg_insert (EMDCsample* sample)
 {
 	int ret;
-	EMDCsample *s = ss->head;
-	while (s != NULL)
+	if (commit_count == 0)
 	{
-		if (commit_count == 0)
-		{
-			EMDC_sql_begin_tnx();
-		}
-        	EMDC_sql_insert(s->val, s->dc_id, s->rarr);
-		s = s->next;
-		commit_count++;
-		if (commit_count == globals.max_commit)
-                {
-                       	ret = EMDC_sql_commit_tnx();
-                       	if (!ret)
-                       	{
-                               	commit_count = 0;
-                       	}
-                }
-        }
-	zlog_info (c, "done !");
-	return 0;
-}
-
-int process_msg_delete (EMDCsamples* ss)
-{
-	int ret;
-        EMDCsample *s = ss->head;
-        while (s != NULL)
+		EMDC_sql_begin_tnx();
+	}
+        EMDC_sql_insert(sample->ts, sample->dc_id, sample->rarr, sample->status);
+	commit_count++;
+	if (commit_count == globals.max_commit)
         {
-                if (commit_count == 0)
+                ret = EMDC_sql_commit_tnx();
+                if (!ret)
                 {
-                        EMDC_sql_begin_tnx();
+                        commit_count = 0;
                 }
-                EMDC_sql_delete(s->val, s->dc_id, s->rarr);
-                s = s->next;
-                commit_count++;
-                if (commit_count == globals.max_commit)
-                {
-                	ret = EMDC_sql_commit_tnx();
-                        if (!ret)
-                        {
-                        	commit_count = 0;
-                        }
-                }
-                
         }
 	zlog_info (c, "done !");
 	return 0;
 }
 
+int process_msg_update (EMDCsample* sample)
+{
+        return 0;
+}
+
+/*
 int process_msg_select (EMDCsamples* ss)
 {
 	int ret;
@@ -381,14 +342,14 @@ int process_msg_select (EMDCsamples* ss)
 	}
 	if (s != NULL)
 	{
-		/*
-		 * da implementare: restutuisce solo i campioni che sono passati in input
-		 * se sono presenti nel data base
-		 */
+
+		 // da implementare: restutuisce solo i campioni che sono passati in input
+		 // se sono presenti nel data base
+
 	}
 	else
 	{
-		/* select all the sample up to the msg size */
+
 		zlog_debug (c, "select all");
 		EMDCmsg* m = EMDC_sql_select (max_samples);
 		char *xmlRet = EMDC_xml_build (m);
@@ -397,8 +358,8 @@ int process_msg_select (EMDCsamples* ss)
         	free (xmlRet);
         	free_message (m);
         	free (m);
-	}	
+	}
 	zlog_info (c, "done !");
 	return 0;
 }
-
+*/
