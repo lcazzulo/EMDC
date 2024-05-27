@@ -53,5 +53,5 @@ dkms.conf
 
 
 3rdParty/json-c-build/
-frontend/bin/*
-frontend/bin/tests/*
+bin/*
+
