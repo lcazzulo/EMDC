@@ -288,7 +288,7 @@ int process_msg (const char* str)
 			zlog_info (c, "inserting new sample message ...");
 			process_msg_insert (sample);
                         // send sample to EMDCpublisher
-                        EMDC_queue_send (globals.queue_out, str);
+                        //EMDC_queue_send (globals.queue_out, str);
 		}
 		else if (sample->status == STATUS_DELIVERED || sample->status == STATUS_NOT_DELIVERED)
 		{

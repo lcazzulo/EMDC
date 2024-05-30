@@ -10,7 +10,7 @@ extern zlog_category_t *c;
 static sqlite3 *pDb = NULL;
 
 /* statement insert */
-static const char szInsert[] = "insert into samples values ( ?, ?, ?, ? )";
+static const char szInsert[] = "insert into samples values (?, ?, ?, ?)";
 
 /* handle statement insert */
 static sqlite3_stmt *pInsert = NULL;
@@ -209,6 +209,12 @@ int EMDC_sql_insert (long long val, int dc_id, int rarr, int status)
                 zlog_error (c, "error [%d] - %s in sqlite3_bind_int()", rc, sqlite3_errmsg (pDb));
                 ret = -1;
         }
+        rc = sqlite3_bind_int ( pInsert, 4, status );
+        if ( rc != SQLITE_OK )
+        {
+                zlog_error (c, "error [%d] - %s in sqlite3_bind_int()", rc, sqlite3_errmsg (pDb));
+                ret = -1;
+        }
 	rc = sqlite3_step(pInsert);
 	if ( rc !=  SQLITE_DONE )
 	{
@@ -279,7 +285,7 @@ int EMDC_sql_delete (long long val, int dc_id, int rarr)
 	{
 		zlog_debug (c, "\"%s\" execute ok", szDelete);
 	}
-        return ret;	
+        return ret;
 }
 
 /*
@@ -295,7 +301,7 @@ EMDCmsg* EMDC_sql_select (int num)
 		if(ret == SQLITE_ROW && (num == -1 || count < num))
 		{
 			zlog_debug (c, "fetched row");
-			add_sample(ss, 
+			add_sample(ss,
 				   sqlite3_column_int64(pSelect, 0),
 				   sqlite3_column_int(pSelect, 1),
 				   sqlite3_column_int(pSelect, 2));
@@ -308,7 +314,7 @@ EMDCmsg* EMDC_sql_select (int num)
 				zlog_debug (c, "end of fetch");
 			}
 			else
-			{	
+			{
 				if (ret == SQLITE_ROW)
 				{
 					zlog_info (c, "more rows to fetch ...");
@@ -347,6 +353,7 @@ int prepare_statements ()
 	if (pInsert == NULL || ret != SQLITE_OK)
 	{
 		zlog_error (c, "error [%d] in sqlite3_prepare_v2() for statement \"%s\"", ret, szInsert);
+                printf (sqlite3_errmsg(pDb));
 		return -1;
 	}
 	zlog_info (c, "sqlite3_prepare_v2() ok for statement \"%s\"", szInsert);
