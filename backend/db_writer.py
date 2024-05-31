@@ -1,10 +1,23 @@
 import pika
+import mariadb
+import json
+
+db_conn = mariadb.connect(
+        host="127.0.0.1",
+        port=3306,
+        user="emdc",
+        password="emdc")
+cur = db_conn.cursor()
 
 def callback(ch, method, properties, body):
-    #pass
     print(" [x] %r:%r" % (method.routing_key, body))
+    y = json.loads(body)
+    cur.execute("INSERT INTO EMDC.samples (user_id, sample_ts, dc_id, rarr_flag, insert_ts) VALUES (?, ?, ?, ?, ?)",
+        (0, y["ts"], y["dc_id"], y["rarr"], 0));
+    db_conn.commit()
 
 def run_app():
+
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='altair.luca-cazzulo.me'))
     channel = connection.channel()
 
