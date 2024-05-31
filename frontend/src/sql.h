@@ -8,7 +8,7 @@ int EMDC_sql_begin_tnx ();
 int EMDC_sql_commit_tnx ();
 int EMDC_sql_rollback_tnx ();
 int EMDC_sql_insert (long long val, int dc_id, int rarr, int status);
-int EMDC_sql_update (long long val, int dc_id, int rarr, int status);
+int EMDC_sql_update (int status, long long val, int dc_id, int rarr);
 //EMDCmsg* EMDC_sql_select (int num);
 
 #endif

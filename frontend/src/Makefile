@@ -37,6 +37,9 @@ ${OBJ_PATH}/dbmgr.o : dbmgr.c sql.h defines.h queue.h
 ${OBJ_PATH}/datacap.o : datacap.c xml.h queue.h defines.h
 	${CC} -I${LIB_INIPARSER_INCLUDE} -c -o ${OBJ_PATH}/datacap.o datacap.c
 
+${OBJ_PATH}/datapublish.o : datapublish.c queue.h defines.h
+	${CC} -I${LIB_INIPARSER_INCLUDE} -I${LIB_RABBIT_MQ_C_INCLUDE} -c -o ${OBJ_PATH}/datapublish.o datapublish.c
+
 ${OBJ_PATH}/datasnd.o : datasnd.c xml.h queue.h defines.h http.h
 	${CC} -c -o ${OBJ_PATH}/datasnd.o datasnd.c
 
@@ -50,6 +53,10 @@ ${BIN_PATH}/EMDCdbmgr : ${OBJ_PATH}/dbmgr.o ${OBJ_PATH}/sql.o ${OBJ_PATH}/queue.
 ${BIN_PATH}/EMDCdatacap : ${OBJ_PATH}/datacap.o ${OBJ_PATH}/queue.o ${OBJ_PATH}/my_json.o
 	${CC} -o ${BIN_PATH}/EMDCdatacap ${OBJ_PATH}/datacap.o ${OBJ_PATH}/queue.o \
         ${OBJ_PATH}/my_json.o -lwiringPi -lzlog -liniparser -ljson-c -lpthread -lrt
+
+${BIN_PATH}/EMDCdatapublish : ${OBJ_PATH}/datapublish.o ${OBJ_PATH}/queue.o ${OBJ_PATH}/my_json.o ${OBJ_PATH}/my_amqp.o
+	${CC} -o ${BIN_PATH}/EMDCdatapublish ${OBJ_PATH}/datapublish.o ${OBJ_PATH}/queue.o \
+	${OBJ_PATH}/my_json.o ${OBJ_PATH}/my_amqp.o -lzlog -liniparser -ljson-c -L${LIB_RABBIT_MQ_C_LIB} -lrabbitmq -lpthread -lrt
 
 ${BIN_PATH}/EMDCdatasnd : ${OBJ_PATH}/datasnd.o ${OBJ_PATH}/xml.o ${OBJ_PATH}/list.o ${OBJ_PATH}/queue.o ${OBJ_PATH}/http.o
 	${CC} -o ${BIN_PATH}/EMDCdatasnd ${OBJ_PATH}/datasnd.o ${OBJ_PATH}/queue.o \

@@ -2,15 +2,19 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <limits.h>
+#include <time.h>
 #include <sys/time.h>
 #include <errno.h>
 #include <zlog.h>
 #include <iniparser.h>
 #include "defines.h"
 #include "queue.h"
+#include "my_json.h"
+#include "my_amqp.h"
 
+#define RETRY_CONNECTION_TIME (10)
 
-typedef struct _EMDC_datasender_globals
+typedef struct _EMDC_datapublish_globals
 {
         char EMDC_HOME[PATH_MAX];
         char init_file_path[PATH_MAX];
@@ -20,20 +24,21 @@ typedef struct _EMDC_datasender_globals
 	char broker_address[512];
 	char user[65];
 	char password[64];
+        AMQP_Ctx *ctx;
 
-} EMDC_datasender_globals;
+} EMDC_datapublish_globals;
 
 static int go = 1;
 static int signum = 0;
-static EMDC_datasender_globals globals;
+static EMDC_datapublish_globals globals;
+static int connected_to_broker = 0;
 
 int init ();
 int main_loop ();
 int fini ();
-int send_select_request ();
-void send_message_remote (const char* msg);
-short more_to_fetch (const char* msg);
-short has_samples (const char* msg);
+int publish_message (const char* msg);
+int retry_connect ();
+int init_timer ();
 
 void signal_callback_handler(int sgnm)
 {
@@ -41,6 +46,18 @@ void signal_callback_handler(int sgnm)
         signum = sgnm;
 }
 
+void timer_handler(int sig, siginfo_t *si, void *uc)
+{
+        int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672);
+        if (ret != 0)
+        {
+                retry_connect();
+        }
+        else
+        {
+                connected_to_broker = 1;
+        }
+}
 
 zlog_category_t *c = NULL;
 
@@ -57,10 +74,10 @@ int init ()
         int rc;
         char* emdc_home;
 	dictionary* ini = NULL;
-	char *s;
+	const char *s;
 	int ii;
 
-        memset ((void*) &globals, '\x0', sizeof (EMDC_datasender_globals));
+        memset ((void*) &globals, '\x0', sizeof (EMDC_datapublish_globals));
 
         emdc_home = getenv ("EMDC_HOME");
         if (emdc_home == NULL || strlen(emdc_home) == 0)
@@ -71,8 +88,7 @@ int init ()
         strncpy (globals.EMDC_HOME, emdc_home, sizeof (globals.EMDC_HOME) - 1);
         printf ("EMDC_HOME          [%s]\n", globals.EMDC_HOME);
 
-        snprintf (globals.log_conf_file_path, sizeof (globals.log_conf_file_path) - 1, "%s/etc/log.conf", globals.EMDC_HOME)
-        ;
+        snprintf (globals.log_conf_file_path, sizeof (globals.log_conf_file_path) - 1, "%s/etc/log.conf", globals.EMDC_HOME);
         printf ("log conf file path [%s]\n", globals.log_conf_file_path);
 
         rc = zlog_init(globals.log_conf_file_path);
@@ -82,10 +98,10 @@ int init ()
                 exit (-1);
         }
 
-        c = zlog_get_category("datasnd");
+        c = zlog_get_category("datapublish");
         if (!c)
         {
-                printf("zlog_get_category() for \"datasnd\" failed. Exiting\n");
+                printf("zlog_get_category() for \"datapublish\" failed. Exiting\n");
                 zlog_fini();
         }
 
@@ -98,32 +114,32 @@ int init ()
                 exit(-1);
         }
 
-	s = iniparser_getstring(ini, "DATAPUBLISHER:BROKER_ADDRESS", NULL);
+	s = iniparser_getstring(ini, "DATAPUBLISH:BROKER_ADDRESS", NULL);
         if (s == NULL)
         {
-                zlog_fatal (c, "cannot find entry DATAPUBLISHER:BROKER_ADDRESS in ini file [%s]", globals.init_file_path);
+                zlog_fatal (c, "cannot find entry DATAPUBLISH:BROKER_ADDRESS in ini file [%s]", globals.init_file_path);
                 exit(-1);
         }
-	zlog_info (c, "DATAPUBLISHER:BROKER_ADDRESS = %s", s);
-        strncpy (globals.data_rec_address, s, sizeof (globals.data_rec_address) - 1);
+	zlog_info (c, "DATAPUBLISH:BROKER_ADDRESS = %s", s);
+        strncpy (globals.broker_address, s, sizeof (globals.broker_address) - 1);
 
-	s = iniparser_getstring(ini, "DATAPUBLISHER:USER", NULL);
+	s = iniparser_getstring(ini, "DATAPUBLISH:USER", NULL);
 	if (s == NULL)
         {
-                zlog_fatal (c, "cannot find entry DATAPUBLISHER:USER in ini file [%s]", globals.init_file_path);
+                zlog_fatal (c, "cannot find entry DATAPUBLISH:USER in ini file [%s]", globals.init_file_path);
                 exit(-1);
         }
         strncpy (globals.user, s, sizeof (globals.user) - 1);
-        zlog_info (c, "DATASENDER:USER = %s", globals.user);
+        zlog_info (c, "DATAPUBLISH:USER = %s", globals.user);
 
-	s = iniparser_getstring(ini, "DATAPUBLISHER:PASSWORD", NULL);
+	s = iniparser_getstring(ini, "DATAPUBLISH:PASSWORD", NULL);
         if (s == NULL)
         {
-                zlog_fatal (c, "cannot find entry DATAPUBLISHER:PASSWORD in ini file [%s]", globals.init_file_path);
-                exit(-1); 
+                zlog_fatal (c, "cannot find entry DATAPUBLISH:PASSWORD in ini file [%s]", globals.init_file_path);
+                exit(-1);
         }
         strncpy (globals.password, s, sizeof (globals.password) - 1);
-        zlog_info (c, "DATAPUBLISHER:PASSWORD = %s", globals.password);
+        zlog_info (c, "DATAPUBLISH:PASSWORD = %s", globals.password);
 
 
         /* open the sending message queue */
@@ -131,6 +147,18 @@ int init ()
 	/* open the receiving message queue */
 	globals.queue_in = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_RDONLY, 0, -1, -1);
         /* connect to broker */
+	globals.ctx = (AMQP_Ctx*)malloc(sizeof(AMQP_Ctx));
+        int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672);
+        if (ret != 0)
+        {
+		zlog_error (c, "error connecting to broker");
+		retry_connect();
+        }
+	else
+	{
+		connected_to_broker = 1;
+	}
+
         signal(SIGINT, signal_callback_handler);
         signal(SIGTERM, signal_callback_handler);
         zlog_info(c, "datasnd started");
@@ -146,12 +174,94 @@ int main_loop ()
 	while (go)
         {
                 // preleva i messaggi dalla coda globals.qin
-		// invia messaggio a broker
-		// se messaggio consegnato accoda alla coda qlobals.qout messaggio con stato DELIVERED
-                // altrimenti con stato UNDELIVERED
+                memset ((void*) buffer_in, '\x0', msg_length_in);
+                int ret = EMDC_queue_rcv (globals.queue_in, buffer_in, msg_length_in);
+                if (ret >= 0)
+                {
+                    zlog_info (c, "received message, start processing ...");
+                    zlog_debug (c, "msg: %s", buffer_in);
+                    // invia messaggio a broker
+                    // se messaggio consegnato accoda alla coda qlobals.qout messaggio con stato DELIVERED
+                    // altrimenti con stato UNDELIVERED
+		    publish_message (buffer_in);
+                }
+                else
+		{
+		    zlog_debug (c, "no message in queue");
+		}
+        }
+        free (buffer_in);
+        zlog_debug (c, "exiting main loop");
+}
+
+int publish_message (const char* str)
+{
+        char buffer[64];
+	EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
+        sample_from_json(sample, str);
+        if (sample != NULL)
+        {
+            if (connected_to_broker == 1)
+            {
+		int ret = AMQP_Sendmessage(globals.ctx, "EMDC", "A.B.C", str);
+                if (ret != 0)
+                {
+                        zlog_error (c, "error publishing message");
+                }
+		else
+		{
+			zlog_info (c, "message published");
+                        sample->status = STATUS_DELIVERED;
+			sample_to_json (sample, buffer);
+                        EMDC_queue_send (globals.queue_out, buffer);
+		}
+
+	    }
+            free (sample);
+	}
+}
+
+
+int retry_connect ()
+{
+        timer_t                 timerid;
+        struct itimerspec       value;
+        struct sigevent         sev;
+        struct sigaction        sa;
+
+        value.it_value.tv_sec = RETRY_CONNECTION_TIME;
+        value.it_value.tv_nsec = 0;
+
+        value.it_interval.tv_sec = 0;
+        value.it_interval.tv_nsec = 0;
+
+        sa.sa_flags = SA_SIGINFO;
+        sa.sa_sigaction = timer_handler;
+        sigemptyset(&sa.sa_mask);
+
+        if (sigaction(SIGRTMIN, &sa, NULL) == -1)
+        {
+               zlog_error (c, "error %d [%s] in sigaction()", errno, strerror(errno));
+               return -1;
         }
 
-        zlog_debug (c, "exiting main loop");
+        sev.sigev_notify = SIGEV_SIGNAL;
+        sev.sigev_signo = SIGRTMIN;
+        sev.sigev_value.sival_ptr = &timerid;
+
+        if (timer_create(CLOCK_REALTIME, &sev, &timerid) == -1)
+        {
+               zlog_error (c, "error %d [%s] in timer_create()", errno, strerror(errno));
+               return -1;
+        }
+
+        if (timer_settime (timerid, 0, &value, NULL) == -1)
+        {
+                zlog_error (c, "error %d [%s] in timer_settime()", errno, strerror(errno));
+                return -1;
+        }
+        zlog_info (c, "init timer ok");
+        zlog_debug (c, "retrying connection to broker in %d seconds", RETRY_CONNECTION_TIME);
 }
 
 int fini ()

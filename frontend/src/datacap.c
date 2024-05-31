@@ -74,7 +74,9 @@ int main (int argc, char *argv[])
 		/*******************************************************/
 
 		/* get back to non-privileged user *********************/
-                int ret;
+
+		/*
+		int ret;
                 char* p_group = getenv ("DC_GROUP");
                 if (p_group != NULL)
                 {
@@ -107,7 +109,7 @@ int main (int argc, char *argv[])
                 {
                         printf ("please set \"DC_USER\" environment variable\r\n");
                 }
-
+		*/
                 /*******************************************************/
 	}
 	init (argc, argv);
@@ -416,6 +418,7 @@ int sendmsg (int id, int rarr)
 	sample->status = STATUS_TO_DELIVER;
      	sample_to_json (sample, buff);
 	zlog_info (c, "enqueuing msg to dbmgr: %s", buff);
+	
 	ret = EMDC_queue_send (globals.queue_out, buff);
 	if (ret != 0)
         {
@@ -429,6 +432,7 @@ int sendmsg (int id, int rarr)
                 }
                 exit (-1);
         }
+	
 	free (sample);
 	return 0;
 }
