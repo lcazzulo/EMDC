@@ -312,12 +312,28 @@ int process_msg_insert (EMDCsample* sample)
                         commit_count = 0;
                 }
         }
-	zlog_info (c, "done !");
+	zlog_info (c, "done insert !");
 	return 0;
 }
 
 int process_msg_update (EMDCsample* sample)
 {
+        int ret;
+        if (commit_count == 0)
+        {
+                EMDC_sql_begin_tnx();
+        }
+        EMDC_sql_update(sample->status, sample->ts, sample->dc_id, sample->rarr);
+        commit_count++;
+        if (commit_count == globals.max_commit)
+        {
+                ret = EMDC_sql_commit_tnx();
+                if (!ret)
+                {
+                        commit_count = 0;
+                }
+        }
+        zlog_info (c, "done update !");
         return 0;
 }
 

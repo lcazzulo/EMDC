@@ -108,6 +108,7 @@ int EMDC_sql_release ()
 	sqlite3_finalize (pInsert);
 	sqlite3_finalize (pSelect);
 	sqlite3_finalize (pDelete);
+        sqlite3_finalize (pUpdate);
 	sqlite3_finalize (pBegin);
 	sqlite3_finalize (pCommit);
 	sqlite3_finalize (pRollback);
@@ -288,6 +289,63 @@ int EMDC_sql_delete (long long val, int dc_id, int rarr)
         return ret;
 }
 
+int EMDC_sql_update (int status, long long val, int dc_id, int rarr)
+{
+	int ret, rc;
+        ret = 0;
+	zlog_debug (c, "status [%d]", status);
+        rc = sqlite3_bind_int ( pUpdate, 1, status );
+        if ( rc != SQLITE_OK )
+        {
+                zlog_error (c, "error [%d] - %s in sqlite3_bind_int64()", rc, sqlite3_errmsg (pDb));
+                ret = -1;
+        }
+	zlog_debug (c, "val [%lld]", val);
+        rc = sqlite3_bind_int64 ( pUpdate, 2, val );
+        if ( rc != SQLITE_OK )
+        {
+                zlog_error (c, "error [%d] - %s in sqlite3_bind_int()", rc, sqlite3_errmsg (pDb));
+                ret = -1;
+        }
+        zlog_debug (c, "dc_id [%d]", dc_id);
+        rc = sqlite3_bind_int ( pUpdate, 3, dc_id );
+        if ( rc != SQLITE_OK )
+        {
+                zlog_error (c, "error [%d] - %s in sqlite3_bind_int()", rc, sqlite3_errmsg (pDb));
+                ret = -1;
+        }
+        zlog_debug (c, "rarr [%d]", rarr);
+        rc = sqlite3_bind_int ( pUpdate, 4, rarr );
+        if ( rc != SQLITE_OK )
+        {
+                zlog_error (c, "error [%d] - %s in sqlite3_bind_int()", rc, sqlite3_errmsg (pDb));
+                ret = -1;
+        }
+        rc = sqlite3_step(pUpdate);
+        if ( rc !=  SQLITE_DONE )
+        {
+                zlog_error (c, "error [%d] - %s in sqlite3_step()", rc, sqlite3_errmsg (pDb));
+                ret = -1;
+        }
+        rc = sqlite3_clear_bindings(pUpdate);
+        if ( rc !=  SQLITE_OK )
+        {
+                zlog_error (c, "error [%d] - %s in sqlite3_clear_bindings()", rc, sqlite3_errmsg (pDb));
+                ret = -1;
+        }
+        rc = sqlite3_reset(pUpdate);
+        if ( rc !=  SQLITE_OK )
+        {
+                zlog_error (c, "error [%d] - %s in sqlite3_reset()", rc, sqlite3_errmsg (pDb));
+                ret = -1;
+        }
+        if (!ret)
+        {
+                zlog_debug (c, "\"%s\" execute ok", szUpdate);
+        }
+        return ret;
+}
+
 /*
 EMDCmsg* EMDC_sql_select (int num)
 {
@@ -396,6 +454,26 @@ int prepare_statements ()
         zlog_info (c, "sqlite3_prepare_v2() ok for statement \"%s\"", szDelete);
 	/*************************************************************************************************/
 
+	/*************************************************************************************************/
+        /* UPDATE ****************************************************************************************/
+        ret =  sqlite3_prepare_v2(
+                                pDb,                            /* Database handle */
+                                szUpdate,                       /* SQL statement, UTF-8 encoded */
+                                strlen(szUpdate),               /* Maximum length of zSql in bytes. */
+                                &pUpdate,                       /* OUT: Statement handle */
+                                NULL                            /* OUT: Pointer to unused portion of zSql */
+        );
+        if (pUpdate == NULL || ret != SQLITE_OK)
+        {
+                zlog_error (c, "error [%d] in sqlite3_prepare_v2() for statement \"%s\"", ret, szUpdate);
+                sqlite3_finalize ( pInsert );
+                sqlite3_finalize ( pSelect );
+                sqlite3_finalize ( pDelete );
+                return -1;
+        }
+        zlog_info (c, "sqlite3_prepare_v2() ok for statement \"%s\"", szUpdate);
+        /*************************************************************************************************/
+
 	/*************************************************************************************************/	
 	/* BEGIN *****************************************************************************************/
 	ret =  sqlite3_prepare_v2(
@@ -412,6 +490,7 @@ int prepare_statements ()
 		sqlite3_finalize ( pInsert );
         	sqlite3_finalize ( pSelect );
         	sqlite3_finalize ( pDelete );
+                sqlite3_finalize ( pUpdate );
                 return -1;
         }
 	zlog_info (c, "sqlite3_prepare_v2() ok for statement \"%s\"", szBegin);
@@ -433,6 +512,7 @@ int prepare_statements ()
 		sqlite3_finalize ( pInsert );
         	sqlite3_finalize ( pSelect );
         	sqlite3_finalize ( pDelete );
+                sqlite3_finalize ( pUpdate );
         	sqlite3_finalize ( pBegin );
                 return -1;
         }
@@ -455,6 +535,7 @@ int prepare_statements ()
 		sqlite3_finalize ( pInsert );
         	sqlite3_finalize ( pSelect );
         	sqlite3_finalize ( pDelete );
+                sqlite3_finalize ( pUpdate );
         	sqlite3_finalize ( pBegin );
         	sqlite3_finalize ( pCommit );
                 return -1;
