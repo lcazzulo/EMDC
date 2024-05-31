@@ -24,6 +24,7 @@ typedef struct _EMDC_dbmgr_globals
 	char db_file_path[PATH_MAX];
 	mqd_t queue_in;
 	mqd_t queue_out;
+        mqd_t queue_delayed;
 	int max_commit;
 	int commit_interval;
 
@@ -113,23 +114,25 @@ int init ()
 	/* open the receiving message queue */
 	globals.queue_in = EMDC_queue_init (EMDC_QUEUE_IN_NAME, O_RDONLY, 0, 5000, 8192);
 	/* open the sending message queue */
-	globals.queue_out = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 1, 8192);
+	globals.queue_out = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 5000, 8192);
+        /* open delayed message queue */
+	globals.queue_delayed = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 1, 8192);
 	/*
                 calcolo aprossimativo per determinare il massimo numero di campioni
                 che si possono inserire in una risposta a un comando si "SELECT":
 
-                110 lunglezza di
-                <?xml version="1.0" encoding="UTF-8"?>
-                <Message type="response"><Samples action="SELECT"></Samples></Message>
+                30 lunglezza di
+                { "delayed_samples": [] }
 
-                49 lunghezza di (aprox 50)
-                <Sample dc_id="0" rarr="0">1366125139808</Sample>
+
+                60 lunghezza di (aprox 50)
+                { "ts": 1717157402214, "dc_id": 2, "rarr": 1, "status": 1 },
         */
-	max_samples = (EMDC_get_queue_msg_length (globals.queue_out) - 110) / 50;
-	zlog_info (c, "max samples in message is %d", max_samples);
+	max_samples = (EMDC_get_queue_msg_length (globals.queue_delayed) - 30) / 60;
+	zlog_info (c, "max samples in queue of delayed message is %d", max_samples);
 	if (max_samples <= 0)
 	{
-		zlog_fatal (c, "queue message length too small. Exiting");
+		zlog_fatal (c, "queue of delayed message length too small. Exiting");
 		exit(-1);
 	}
 	short in_memory = 0;
@@ -173,20 +176,11 @@ int init ()
 
 int init_timer ()
 {
-	/*
-	time_t                  t;
-        long                    l;
-	*/
         timer_t                 timerid;
         struct itimerspec       value;
         struct sigevent         sev;
         struct sigaction        sa;
 
-        /*
-	t = time(NULL);
-        l = t % 60;
-        printf ("\n%d\n", l);
-	*/
         value.it_value.tv_sec = globals.commit_interval;
         value.it_value.tv_nsec = 0;
 
@@ -288,7 +282,7 @@ int process_msg (const char* str)
 			zlog_info (c, "inserting new sample message ...");
 			process_msg_insert (sample);
                         // send sample to EMDCpublisher
-                        //EMDC_queue_send (globals.queue_out, str);
+                        EMDC_queue_send (globals.queue_out, str);
 		}
 		else if (sample->status == STATUS_DELIVERED || sample->status == STATUS_NOT_DELIVERED)
 		{
