@@ -1,3 +1,4 @@
+import time
 import pika
 import mariadb
 import json
@@ -13,7 +14,7 @@ def callback(ch, method, properties, body):
     print(" [x] %r:%r" % (method.routing_key, body))
     y = json.loads(body)
     cur.execute("INSERT INTO EMDC.samples (user_id, sample_ts, dc_id, rarr_flag, insert_ts) VALUES (?, ?, ?, ?, ?)",
-        (0, y["ts"], y["dc_id"], y["rarr"], 0));
+        (0, y["ts"], y["dc_id"], y["rarr"], round(time.time() * 1000)));
     db_conn.commit()
 
 def run_app():
