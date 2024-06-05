@@ -47,3 +47,10 @@ int AMQP_Sendmessage(AMQP_Ctx* ctx, const char* exchange, const char* routingkey
 	}
 	return 0;
 }
+
+int AMQP_Close (AMQP_Ctx* ctx)
+{
+	amqp_channel_close(ctx->conn, 1, AMQP_REPLY_SUCCESS);
+        amqp_connection_close(ctx->conn, AMQP_REPLY_SUCCESS);
+        amqp_destroy_connection(ctx->conn);
+}

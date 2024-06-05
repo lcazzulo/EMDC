@@ -207,6 +207,10 @@ int publish_message (const char* str)
                 if (ret != 0)
                 {
                         zlog_error (c, "error publishing message");
+                        // assumo che ci sia un errore ci connessione
+                        //AMQP_Close();
+			connected_to_broker = 0;
+                        retry_connect();
                 }
 		else
 		{
