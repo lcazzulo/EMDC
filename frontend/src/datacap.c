@@ -433,7 +433,7 @@ int sendmsg (int id, int rarr)
                 exit (-1);
         }
 	
-	free (sample);
+	free ((void*)sample);
 	return 0;
 }
 

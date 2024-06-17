@@ -112,11 +112,11 @@ int init ()
         }
 
 	/* open the receiving message queue */
-	globals.queue_in = EMDC_queue_init (EMDC_QUEUE_IN_NAME, O_RDONLY, 0, 5000, 8192);
+	globals.queue_in = EMDC_queue_init (EMDC_QUEUE_IN_NAME, O_RDONLY, 0, 65536, 8192);
 	/* open the sending message queue */
-	globals.queue_out = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 5000, 8192);
+	globals.queue_out = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 65536, 8192);
         /* open delayed message queue */
-	globals.queue_delayed = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 1, 8192);
+	//globals.queue_delayed = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 1, 8192);
 	/*
                 calcolo aprossimativo per determinare il massimo numero di campioni
                 che si possono inserire in una risposta a un comando si "SELECT":
@@ -128,13 +128,15 @@ int init ()
                 60 lunghezza di (aprox 50)
                 { "ts": 1717157402214, "dc_id": 2, "rarr": 1, "status": 1 },
         */
-	max_samples = (EMDC_get_queue_msg_length (globals.queue_delayed) - 30) / 60;
+	/*
+        max_samples = (EMDC_get_queue_msg_length (globals.queue_delayed) - 30) / 60;
 	zlog_info (c, "max samples in queue of delayed message is %d", max_samples);
 	if (max_samples <= 0)
 	{
 		zlog_fatal (c, "queue of delayed message length too small. Exiting");
 		exit(-1);
 	}
+        */
 	short in_memory = 0;
 	s = iniparser_getstring(ini, "DBMGR:IN_MEMORY", "NO");
 	if ( !strcmp (s, "YES") || !strcmp (s, "yes") )
@@ -290,6 +292,7 @@ int process_msg (const char* str)
 			zlog_info (c, "updating sample message with status %s ...", sample->status == STATUS_DELIVERED ? "DELIVERED" : "NOT_DELIVERED");
                         process_msg_update (sample);
 		}
+		free ((void*) sample);
 
 	}
 	return 0;
