@@ -30,7 +30,12 @@ void sample_from_json (EMDCsample* sample, const char* json)
 			sample->dc_id = dc_id;
 			sample->rarr = rarr;
 			sample->status = status;
+                        //json_object_put( _ts);
+                        //json_object_put( _dc_id);
+                        //json_object_put( _rarr);
+                        //json_object_put( _status);
 		}
+                json_object_put(job);
 
 	}
 }
@@ -50,5 +55,11 @@ void sample_to_json (EMDCsample* sample, char* json)
 		json_object_object_add (job, STATUS, _status);
 		const char * str = json_object_to_json_string (job);
 		strcpy (json, str);
+                //free((void*) str);
+                //free((void*) _status);
+                //free((void*) _rarr);
+                //free((void*) _dc_id);
+                //free((void*) _ts);
+                json_object_put(job);
 	}
 }
