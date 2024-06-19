@@ -221,7 +221,7 @@ int publish_message (const char* str)
 		}
 
 	    }
-            free (sample);
+            free ((void*)sample);
 	}
 }
 
