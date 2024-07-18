@@ -28,7 +28,7 @@ def run_app():
 
             #result = channel.queue_declare(queue='queue-1', exclusive=False)
             #queue_name = result.method.queue
-            queue_name = 'queue-1'
+            queue_name = 'queue_db_writer'
             #channel.queue_bind(exchange='EMDC', queue=queue_name, routing_key="A.B.C")
 
             print(' [*] Waiting for logs. To exit press CTRL+C')
@@ -55,7 +55,7 @@ def run_app():
             print("Connection was closed, retrying...")
             time.sleep(10)
             continue
-    
+
 
 if __name__ == '__main__':
     run_app()
