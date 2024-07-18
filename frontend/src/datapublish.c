@@ -203,7 +203,15 @@ int publish_message (const char* str)
         {
             if (connected_to_broker == 1)
             {
-		int ret = AMQP_Sendmessage(globals.ctx, "EMDC", "A.B.C", str);
+		int ret;
+                if (sample->rarr == 0)
+		{
+                    ret = AMQP_Sendmessage(globals.ctx, "EMDC", "EMDC.EVENTS.ACTIVE", str);
+		}
+		else
+		{
+		    ret = AMQP_Sendmessage(globals.ctx, "EMDC", "EMDC.EVENTS.REACTIVE", str);
+		}
                 if (ret != 0)
                 {
                         zlog_error (c, "error publishing message");
