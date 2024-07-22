@@ -4,10 +4,13 @@ import json
 import socketio
 
 sio = socketio.Client()
+connected = False
 
 @sio.event
 def connect():
+    global connected
     print("I'm connected!")
+    connected = True
     sio.emit('join', '')
 
 @sio.event
@@ -17,17 +20,21 @@ def connect_error(data):
 
 @sio.event
 def disconnect():
+    global connected
     print("I'm disconnected!")
+    connected = False
 
 
 def callback(ch, method, properties, body):
+    global connected
     print(" [x] %r:%r" % (method.routing_key, body))
     y = json.loads(body)
-    sio.emit('EVENTS', y)
+    if connected == True:
+        sio.emit('EVENTS', y)
 
 
 def run_app():
-    connected = False
+    global connected
     while not connected:
         try:
             sio.connect('http://localhost:5000')
