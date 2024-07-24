@@ -35,13 +35,21 @@ const MainPage = () => {
 
         function onPowerActive(value) {
             var value_json = JSON.parse(value);
-            set_active_power(format_three_decimal_places(value_json["power"]));
+	    var new_val = format_three_decimal_places(value_json["power"]);
+	    if (new_val !== active_power)
+	    {
+            	set_active_power(new_val);
+            }
 
         }
 
 	function onPowerReactive(value) {
             var value_json = JSON.parse(value);
-            set_reactive_power(format_three_decimal_places(value_json["power"]));
+            var new_val = format_three_decimal_places(value_json["power"]);
+	    if (new_val !== reactive_power)
+            {
+            	set_reactive_power(new_val);
+	    }
 
         }
 
@@ -60,8 +68,8 @@ const MainPage = () => {
 
 
     return (
-        <div className="container-fluid">
-            <table className="table table-sm align-middle">
+        <div>
+            <table style={{width: '98%'}}>
 		<thead>
 			<tr>
 				<th scope="col" style={{textAlign: 'center', backgroundImage: 'linear-gradient(to right, red, snow)'}}>Active power<Nbsp /><Nbsp /></th>
@@ -70,8 +78,8 @@ const MainPage = () => {
 		</thead>
 		<tbody>
 			<tr className="table-light">
-				<td style={{width: '50%', backgroundColor: '#f7d9d7'}}><MyGauge key="gauge-active-power" power={active_power} /></td>
-				<td style={{width: '50%', backgroundColor: '#e8e6ff'}}><MyGauge key="gauge-reactive-power" power={reactive_power} /></td>
+				<td style={{width: '50%', height: '500px', backgroundColor: '#f7d9d7'}}><MyGauge key="gauge-active-power" power={active_power} /></td>
+				<td style={{width: '50%', height: '500px', backgroundColor: '#e8e6ff'}}><MyGauge key="gauge-reactive-power" power={reactive_power} /></td>
 			</tr>
 		</tbody>
             </table>
