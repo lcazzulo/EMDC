@@ -13,7 +13,7 @@ export function MyGauge ({power})  {
                 textColor={'#333333'}
                 needleColor={'#aaaaaa'}
                 needleBaseColor={'#aaaaaa'}
-                animate={true}
+                animate={false}
                 formatTextValue={value => power+" kW"}
             />
         </>
