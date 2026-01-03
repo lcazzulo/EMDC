@@ -7,11 +7,11 @@ import paho.mqtt.client as mqtt
 # -----------------------------
 # CONFIGURATION
 # -----------------------------
-MQTT_BROKER = "localhost"         # MQTT broker host (Home Assistant host)
+MQTT_BROKER = "mosquitto"         # MQTT broker host (Home Assistant host)
 MQTT_PORT = 1883                  # MQTT broker port
 MQTT_USER = "mqtt_user"           # MQTT user
 MQTT_PASSWORD = "emdc"   # MQTT password
-STATE_FILE = "energy_state.json"  # persistent state file
+STATE_FILE = "state/energy_state.json"  # persistent state file
 WH_PER_PULSE = 1                  # Wh per pulse from your meter
 
 RABBITMQ_HOST = "192.168.10.6"
@@ -27,9 +27,13 @@ if os.path.exists(STATE_FILE):
         state = json.load(f)
         active_energy_wh = state.get("active_energy_wh", 0)
         reactive_energy_wh = state.get("reactive_energy_wh", 0)
+        prev_ts_active = state.get("prev_ts_active", 0)
+        prev_ts_reactive = state.get("prev_ts_reactive", 0)
 else:
     active_energy_wh = 0
     reactive_energy_wh = 0
+    prev_ts_active = 0
+    prev_ts_reactive = 0
 
 # Initialize MQTT client
 mqtt_client = mqtt.Client()
@@ -42,28 +46,69 @@ def save_state():
     with open(STATE_FILE, "w") as f:
         json.dump({
             "active_energy_wh": active_energy_wh,
-            "reactive_energy_wh": reactive_energy_wh
+            "reactive_energy_wh": reactive_energy_wh,
+            "prev_ts_active": prev_ts_active,
+            "prev_ts_reactive": prev_ts_reactive
         }, f)
 
 def publish_energy():
     """Publish the current cumulative values to MQTT with retain=True."""
-    mqtt_client.publish("home/energy/active", active_energy_wh / 1000, retain=True)
-    mqtt_client.publish("home/energy/reactive", reactive_energy_wh / 1000, retain=True)
+    mqtt_client.publish("home/energy/active_energy", active_energy_wh / 1000, retain=True)
+    mqtt_client.publish("home/energy/reactive_energy", reactive_energy_wh / 1000, retain=True)
+
+def publish_power(instant_power_active_kw, instant_power_reactive_kw):
+    """Publish instantaneous power if available."""
+    if instant_power_active_kw is not None:
+        mqtt_client.publish("home/energy/active_power", instant_power_active_kw, retain=True)
+    if instant_power_reactive_kw is not None:
+        mqtt_client.publish("home/energy/reactive_power", instant_power_reactive_kw, retain=True)
 
 def callback(ch, method, properties, body):
     """Handle messages from RabbitMQ."""
-    global active_energy_wh, reactive_energy_wh
+    global active_energy_wh, reactive_energy_wh, prev_ts_active, prev_ts_reactive
 
     try:
         y = json.loads(body)
+        ts = y["ts"]
+
+        # Initialize instantaneous power
+        instant_power_active_kw = None
+        instant_power_reactive_kw = None
+
         if y["rarr"] == 0:
+            # Active pulse
             active_energy_wh += WH_PER_PULSE
+            if prev_ts_active > 0:
+                delta_t_sec = (ts - prev_ts_active) / 1000
+                if delta_t_sec > 0:
+                    instant_power_active_kw = (WH_PER_PULSE / 1000) / (delta_t_sec / 3600)  # kW
+            prev_ts_active = ts
         else:
+            # Reactive pulse
             reactive_energy_wh += WH_PER_PULSE
+            if prev_ts_reactive > 0:
+                delta_t_sec = (ts - prev_ts_reactive) / 1000
+                if delta_t_sec > 0:
+                    instant_power_reactive_kw = (WH_PER_PULSE / 1000) / (delta_t_sec / 3600)  # kW
+            prev_ts_reactive = ts
+
+        # Save state and publish to MQTT
 
         save_state()
         publish_energy()
-        print(f"Updated: active={active_energy_wh} Wh, reactive={reactive_energy_wh} Wh")
+        publish_power(instant_power_active_kw, instant_power_reactive_kw)
+
+        print(f"Updated: active={active_energy_wh/1000:.3f} kWh, reactive={reactive_energy_wh/1000:.3f} kWh", end="")
+        instant_parts = []
+        if instant_power_active_kw is not None:
+            instant_parts.append(f"active={instant_power_active_kw:.3f} kW")
+        if instant_power_reactive_kw is not None:
+            instant_parts.append(f"reactive={instant_power_reactive_kw:.3f} kW")
+
+        if instant_parts:
+            print(", instant power: " + ", ".join(instant_parts))
+        else:
+            print("")
 
     except Exception as e:
         print(f"Error processing message: {e}")

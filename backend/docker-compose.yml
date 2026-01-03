@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: emdc_mqtt
+    ports:
+      - "1883:1883"
+    volumes:
+      - ~/mosquitto/config:/mosquitto/config
+      - ~/mosquitto/data:/mosquitto/data
+      - ~/mosquitto/log:/mosquitto/log
+    restart: unless-stopped
+
+  emdc-mqtt-writer:
+    build: .
+    container_name: emdc-mqtt-writer
+    depends_on:
+      - mosquitto
+    volumes:
+      - ./state:/app/state
+    environment:
+      - TZ=Europe/Rome
+    restart: unless-stopped
