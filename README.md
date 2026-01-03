@@ -52,7 +52,7 @@ This project collects energy pulses from a smart meter, publishes cumulative and
 ```bash
 cd ~/EMDC/backend
 docker-compose up -d
-```
+
 
 ├── EMDC/
 │ ├── backend/
@@ -65,4 +65,4 @@ docker-compose up -d
 ├── config/
 ├── data/
 └── log/
-
+```
