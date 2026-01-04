@@ -1,8 +1,9 @@
 #include "my_amqp.h"
+#include <stdio.h>
 #include <rabbitmq-c/amqp.h>
 #include <rabbitmq-c/tcp_socket.h>
 
-int AMQP_Init (AMQP_Ctx* ctx, const char* hostname, int port)
+int AMQP_Init (AMQP_Ctx* ctx, const char* hostname, int port, const char* user, const char* password)
 {
 	ctx->conn = amqp_new_connection();
 	ctx->socket = amqp_tcp_socket_new(ctx->conn);
@@ -17,7 +18,7 @@ int AMQP_Init (AMQP_Ctx* ctx, const char* hostname, int port)
 		printf ("error in amqp_socket_open\r\n");
 		return -1;
 	}
-	if(amqp_login(ctx->conn, "/", 0, 131072, 0, AMQP_SASL_METHOD_PLAIN, "guest", "guest").reply_type != AMQP_RESPONSE_NORMAL)
+	if(amqp_login(ctx->conn, "/", 0, 131072, 0, AMQP_SASL_METHOD_PLAIN, user, password).reply_type != AMQP_RESPONSE_NORMAL)
 	{
 		printf ("error in amqp_login\r\n");
                 return -1;

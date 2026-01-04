@@ -20,6 +20,8 @@
 #define MIN_INTERVAL_MILLI 1000
 #define MAX_INTERVAL_MILLI 30000
 
+#define MIN_INTERVAL_BETWEEN_PULSE  800
+
 typedef struct _EMDC_datacap_globals
 {
         char EMDC_HOME[PATH_MAX];
@@ -40,6 +42,8 @@ static int signum = 0;
 static EMDC_datacap_globals globals;
 static int ra_pin_status;
 static int rr_pin_status;
+static unsigned long long last_ra_ts = 0;
+static unsigned long long last_rr_ts = 0;
 
 int init (int argc, char *argv[]);
 int main_loop ();
@@ -51,6 +55,14 @@ void process_dc_id_arg ();
 void sleep_randomically ();
 void wiringPi_callback_ra (void);
 void wiringPi_callback_rr (void);
+
+static unsigned long long now_millis(void)
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return ((unsigned long long)tv.tv_sec) * 1000ULL +
+           ((unsigned long long)tv.tv_usec) / 1000ULL;
+}
 
 
 void signal_callback_handler(int sgnm)
@@ -463,8 +475,18 @@ void wiringPi_callback_ra (void)
 	}
 	else if (ra_pin_status == HIGH && ra_pin_status_now == LOW)
 	{
-		zlog_info(c, "detected change HIGH->LOW in pin %d", globals.gpio_ra);
-		sendmsg (globals.dc_id, 0);
+		unsigned long long ts = now_millis();
+
+		if (last_ra_ts != 0 && (ts - last_ra_ts) < MIN_INTERVAL_BETWEEN_PULSE)
+		{
+			zlog_warn(c, "RA pulse discarded: delta=%llu ms (< %d ms)", ts - last_ra_ts, MIN_INTERVAL_BETWEEN_PULSE);
+		}
+		else
+		{
+			last_ra_ts = ts;
+			zlog_info(c, "valid RA pulse detected, delta ok");
+			sendmsg(globals.dc_id, 0);
+		}
 	}
 	else
 	{
@@ -485,8 +507,18 @@ void wiringPi_callback_rr (void)
         }
         else if (rr_pin_status == HIGH && rr_pin_status_now == LOW)
         {
-                zlog_info(c, "detected change HIGH->LOW in pin %d", globals.gpio_rr);
-		sendmsg (globals.dc_id, 1);
+		unsigned long long ts = now_millis();
+
+		if (last_rr_ts != 0 && (ts - last_rr_ts) < MIN_INTERVAL_BETWEEN_PULSE)
+		{
+			zlog_warn(c, "RR pulse discarded: delta=%llu ms (< %d ms)", ts - last_rr_ts, MIN_INTERVAL_BETWEEN_PULSE);
+		}
+		else
+		{
+			last_rr_ts = ts;
+			zlog_info(c, "valid RR pulse detected, delta ok");
+			sendmsg(globals.dc_id, 1);
+		}
 	}
 	else
         {

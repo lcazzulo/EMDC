@@ -48,7 +48,7 @@ void signal_callback_handler(int sgnm)
 
 void timer_handler(int sig, siginfo_t *si, void *uc)
 {
-        int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672);
+        int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672, globals.user, globals.password);
         if (ret != 0)
         {
                 retry_connect();
@@ -148,7 +148,7 @@ int init ()
 	globals.queue_in = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_RDONLY, 0, -1, -1);
         /* connect to broker */
 	globals.ctx = (AMQP_Ctx*)malloc(sizeof(AMQP_Ctx));
-        int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672);
+        int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672, globals.user, globals.password);
         if (ret != 0)
         {
 		zlog_error (c, "error connecting to broker");

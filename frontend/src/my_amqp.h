@@ -12,7 +12,7 @@ typedef struct _AMQP_Ctx
 } AMQP_Ctx;
 
 
-int AMQP_Init(AMQP_Ctx* ctx, const char* hostname, int port);
+int AMQP_Init(AMQP_Ctx* ctx, const char* hostname, int port, const char* user, const char* password);
 int AMQP_Sendmessage(AMQP_Ctx* ctx, const char* exchange, const char* routingkey, const char* message);
 int AMQP_Close(AMQP_Ctx*  ctx);
 #endif
