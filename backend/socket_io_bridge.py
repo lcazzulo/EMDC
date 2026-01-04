@@ -1,35 +1,54 @@
 import time
 import pika
-import mariadb
 import json
+import socketio
 
-db_conn = mariadb.connect(
-        host="127.0.0.1",
-        port=3306,
-        user="emdc",
-        password="emdc")
-cur = db_conn.cursor()
+sio = socketio.Client()
+connected = False
+
+@sio.event
+def connect():
+    global connected
+    print("I'm connected!")
+    connected = True
+    sio.emit('join', '')
+
+@sio.event
+def connect_error(data):
+    print("The connection failed!")
+
+
+@sio.event
+def disconnect():
+    global connected
+    print("I'm disconnected!")
+    connected = False
+
 
 def callback(ch, method, properties, body):
+    global connected
     print(" [x] %r:%r" % (method.routing_key, body))
     y = json.loads(body)
-    cur.execute("INSERT INTO EMDC.samples (user_id, sample_ts, dc_id, rarr_flag, insert_ts) VALUES (?, ?, ?, ?, ?)",
-        (0, y["ts"], y["dc_id"], y["rarr"], round(time.time() * 1000)));
-    db_conn.commit()
+    if connected == True:
+        sio.emit('EVENTS', y)
+
 
 def run_app():
+    global connected
+    while not connected:
+        try:
+            sio.connect('http://localhost:5000')
+            connected = True
+        except:
+            print("Error during connection to server")
+            time.sleep(5)
 
     while(True):
         try:
 
             connection = pika.BlockingConnection(pika.ConnectionParameters(host='altair.luca-cazzulo.me'))
             channel = connection.channel()
-
-
-            #result = channel.queue_declare(queue='queue-1', exclusive=False)
-            #queue_name = result.method.queue
-            queue_name = 'queue_db_writer'
-            #channel.queue_bind(exchange='EMDC', queue=queue_name, routing_key="A.B.C")
+            queue_name = 'queue_socket_io'
 
             print(' [*] Waiting for logs. To exit press CTRL+C')
 
