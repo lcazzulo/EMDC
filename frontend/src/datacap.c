@@ -84,45 +84,6 @@ int main (int argc, char *argv[])
 		/* setup wiringPi Library, NEED to be executed as root */
 		wiringPiSetup();
 		/*******************************************************/
-
-		/* get back to non-privileged user *********************/
-
-		/*
-		int ret;
-                char* p_group = getenv ("DC_GROUP");
-                if (p_group != NULL)
-                {
-                        printf ("DC_GROUP [%s]\n", p_group);
-                        struct group * grp = getgrnam(p_group);
-                        gid_t gid = grp->gr_gid;
-                        ret = setgid(gid);
-			if (ret != 0)
-                        { 
-                                printf ("error %d [%s] in setgid()\n", errno, strerror(errno));
-                        }
-                }
-		else
-		{
-			printf ("please set \"DC_GROUP\" environment variable\r\n"); 
-		}
-		char* p_user = getenv ("DC_USER");
-                if (p_user != NULL)
-                {
-                        printf ("DC_USER [%s]\n", p_user);
-                        struct passwd * pwd = getpwnam(p_user);
-                        uid_t uid = pwd->pw_uid;
-                        ret = setuid(uid);
-                        if (ret != 0)
-                        {
-                                printf ("error %d [%s] in setuid()\n", errno, strerror(errno));
-                        }
-                }
-		else
-                {
-                        printf ("please set \"DC_USER\" environment variable\r\n");
-                }
-		*/
-                /*******************************************************/
 	}
 	init (argc, argv);
         main_loop ();
@@ -366,87 +327,71 @@ int fini ()
         return 0;
 }
 
-int sendmsg (int id, int rarr)
+int sendmsg(int id, int rarr)
 {
-	int ret;
-	long long time_in_milli;
-	struct timeval tv;
-	struct timezone tz;
+    int ret;
+    long long time_in_milli;
+    struct timeval tv;
+    struct timezone tz;
 
-	ret = gettimeofday (&tv, &tz);
+    ret = gettimeofday(&tv, &tz);
+    if (ret == -1)
+    {
+        zlog_fatal(c, "error %d [%s] in gettimeofday()", ret, strerror(ret));
+        exit(-1);
+    }
 
-	if (ret == -1)
-	{
-		zlog_fatal (c, "error %d [%s] in gettimeofday()", ret, strerror(ret));
-		exit(-1);
-	}
+    time_in_milli = ((unsigned long long)tv.tv_sec) * 1000LL + ((unsigned long long)tv.tv_usec) / 1000LL;
 
-	time_t seconds = tv.tv_sec;
-	suseconds_t microsec = tv.tv_usec;
+    zlog_debug(c, "time in milli [%lld]", time_in_milli);
 
-	zlog_debug (c, "seconds       [%d]", seconds);
-	zlog_debug (c, "microseconds  [%d]", microsec);
+    // Allocate and construct the sample
+    EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
+    if (!sample)
+    {
+        zlog_fatal(c, "malloc failed for EMDCsample");
+        exit(-1);
+    }
 
-	time_in_milli = ((unsigned long long)seconds) * 1000LL + ((unsigned long long)microsec) / 1000LL;
+    char device_id[64];
+    snprintf(device_id, sizeof(device_id), "device-%03d", globals.dc_id);
 
-	zlog_debug (c, "time in milli [%lld]", time_in_milli);
+    // Use sample_ctor to initialize everything safely
+    sample_ctor(sample,
+                time_in_milli,      // ts
+                id,                 // dc_id
+                rarr,               // rarr
+                STATUS_TO_DELIVER,  // status
+                device_id,       // device_id (example, adjust as needed)
+                rarr == 0 ? "energy.active" : "energy.reactive", // event_type
+                0.001,                // value (dummy for now)
+                "kWh",              // unit
+                "datacap");         // source
 
-	/*
-	=== OLD VERSION ===
-	EMDCmsg* m = init_message (EMDCrequest);
-	EMDCsamples *ss = init_samples (EMDCinsert, -1);
-	add_sample(ss, time_in_milli, id, rarr);
-	add_samples (m, ss);
+    // Serialize to JSON
+    char buff[1024];
+    sample_to_json(sample, buff);
 
-	char *xmlRet = EMDC_xml_build (m);
-	zlog_info (c, "enqueuing msg to dbmgr: %s", xmlRet);
-	ret = EMDC_queue_send (globals.queue_out, xmlRet);
-	if (ret != 0)
-	{
-		if (errno == EAGAIN)
-		{
-			zlog_fatal (c, "queue is full. Exiting");
-		}
-		else
-		{
-			zlog_fatal (c, "error %d [%s] in mq_send()", errno, strerror(errno));
-		}
-		exit (-1);
-	}
-	free (xmlRet);
-	free_message (m);
-	free (m);
-	*/
+    zlog_info(c, "enqueuing msg to dbmgr: %s", buff);
 
-	/*
-	=== NEW VERSION
-	send a json message to globals.queue_out
-	*/
-	char buff[1024];
-	EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
-	sample->ts = time_in_milli;
-	sample->dc_id = id;
-	sample->rarr = rarr;
-	sample->status = STATUS_TO_DELIVER;
-     	sample_to_json (sample, buff);
-	zlog_info (c, "enqueuing msg to dbmgr: %s", buff);
-	
-	ret = EMDC_queue_send (globals.queue_out, buff);
-	if (ret != 0)
+    // Send to the queue
+    ret = EMDC_queue_send(globals.queue_out, buff);
+    if (ret != 0)
+    {
+        if (errno == EAGAIN)
         {
-                if (errno == EAGAIN)
-                {
-                        zlog_fatal (c, "queue is full. Exiting");
-                }
-                else
-                {
-                        zlog_fatal (c, "error %d [%s] in mq_send()", errno, strerror(errno));
-                }
-                exit (-1);
+            zlog_fatal(c, "queue is full. Exiting");
         }
-	
-	free ((void*)sample);
-	return 0;
+        else
+        {
+            zlog_fatal(c, "error %d [%s] in mq_send()", errno, strerror(errno));
+        }
+        free(sample);
+        exit(-1);
+    }
+
+    free(sample);
+    return 0;
 }
 
 void sleep_randomically ()

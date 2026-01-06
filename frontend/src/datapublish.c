@@ -194,43 +194,94 @@ int main_loop ()
         zlog_debug (c, "exiting main loop");
 }
 
+
 int publish_message (const char* str)
 {
-        char buffer[64];
-	EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
-        sample_from_json(sample, str);
-        if (sample != NULL)
-        {
-            if (connected_to_broker == 1)
-            {
-		int ret;
-                if (sample->rarr == 0)
-		{
-                    ret = AMQP_Sendmessage(globals.ctx, "EMDC", "EMDC.EVENTS.ACTIVE", str);
-		}
-		else
-		{
-		    ret = AMQP_Sendmessage(globals.ctx, "EMDC", "EMDC.EVENTS.REACTIVE", str);
-		}
-                if (ret != 0)
-                {
-                        zlog_error (c, "error publishing message");
-                        // assumo che ci sia un errore ci connessione
-                        //AMQP_Close();
-			connected_to_broker = 0;
-                        retry_connect();
-                }
-		else
-		{
-			zlog_info (c, "message published");
-                        sample->status = STATUS_DELIVERED;
-			sample_to_json (sample, buffer);
-                        EMDC_queue_send (globals.queue_out, buffer);
-		}
+    int ret;
+    char buffer[1024];
+    const char *routing_key = NULL;
 
-	    }
-            free ((void*)sample);
-	}
+    EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
+    if (!sample) {
+        zlog_error(c, "malloc failed for EMDCsample");
+        return -1;
+    }
+
+    /* Parse incoming JSON */
+    sample_from_json(sample, str);
+
+    /* ---- Canonical field enrichment (legacy-compatible) ---- */
+
+    /* device_id */
+    if (sample->device_id[0] == '\0') {
+        snprintf(sample->device_id, sizeof(sample->device_id),
+                 "raspberry.emdc.%d", sample->dc_id);
+    }
+
+    /* event_type, value, unit */
+    if (sample->event_type[0] == '\0') {
+        if (sample->rarr == 0) {
+            strncpy(sample->event_type, "energy.active",
+                    sizeof(sample->event_type) - 1);
+            sample->value = 0.001;
+            strncpy(sample->unit, "kWh",
+                    sizeof(sample->unit) - 1);
+        } else {
+            strncpy(sample->event_type, "energy.reactive",
+                    sizeof(sample->event_type) - 1);
+            sample->value = 0.001;
+            strncpy(sample->unit, "kWh",
+                    sizeof(sample->unit) - 1);
+        }
+
+        /* enforce null-termination */
+        sample->event_type[sizeof(sample->event_type) - 1] = '\0';
+        sample->unit[sizeof(sample->unit) - 1] = '\0';
+    }
+
+    /* source */
+    if (sample->source[0] == '\0') {
+        strncpy(sample->source, "datapublish",
+                sizeof(sample->source) - 1);
+        sample->source[sizeof(sample->source) - 1] = '\0';
+    }
+
+    /* ---- Routing decision ---- */
+
+    if (strcmp(sample->event_type, "energy.active") == 0) {
+        routing_key = "EMDC.EVENTS.ACTIVE";
+    }
+    else if (strcmp(sample->event_type, "energy.reactive") == 0) {
+        routing_key = "EMDC.EVENTS.REACTIVE";
+    }
+    else {
+        routing_key = "EMDC.EVENTS.OTHER";
+    }
+
+    /* ---- Publish ---- */
+
+    if (connected_to_broker == 1) {
+
+        ret = AMQP_Sendmessage(globals.ctx, "EMDC", routing_key, str);
+
+        if (ret != 0) {
+            zlog_error(c, "error publishing message to broker");
+            connected_to_broker = 0;
+            retry_connect();
+        }
+        else {
+            zlog_info(c, "message published to %s", routing_key);
+
+            /* mark delivered and re-serialize enriched event */
+            sample->status = STATUS_DELIVERED;
+            sample_to_json(sample, buffer);
+
+            EMDC_queue_send(globals.queue_out, buffer);
+        }
+    }
+
+    free(sample);
+    return 0;
 }
 
 
