@@ -81,9 +81,7 @@ int main (int argc, char *argv[])
 
 	if (globals.test_mode == 0)
 	{
-		/* setup wiringPi Library, NEED to be executed as root */
 		wiringPiSetup();
-		/*******************************************************/
 	}
 	init (argc, argv);
         main_loop ();
