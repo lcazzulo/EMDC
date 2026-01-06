@@ -52,7 +52,8 @@ Mkfile.old
 dkms.conf
 
 
-3rdParty/json-c-build/
 bin/*
 log/*
 var/*
+
+3rdParty/
