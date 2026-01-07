@@ -8,7 +8,6 @@
 #include <iniparser.h>
 
 #include "defines.h"
-//#include "list.h"
 #include "sample.h"
 #include "queue.h"
 #include "sql.h"
@@ -44,7 +43,6 @@ int fini ();
 int process_msg (const char* msg);
 int process_msg_insert (EMDCsample* sample);
 int process_msg_update (EMDCsample* sample);
-//int process_msg_select (EMDCsample* sample);
 
 void timer_handler(int sig, siginfo_t *si, void *uc)
 {
@@ -115,28 +113,6 @@ int init ()
 	globals.queue_in = EMDC_queue_init (EMDC_QUEUE_IN_NAME, O_RDONLY, 0, 65536, 8192);
 	/* open the sending message queue */
 	globals.queue_out = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 65536, 8192);
-        /* open delayed message queue */
-	//globals.queue_delayed = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_WRONLY, 1, 1, 8192);
-	/*
-                calcolo aprossimativo per determinare il massimo numero di campioni
-                che si possono inserire in una risposta a un comando si "SELECT":
-
-                30 lunglezza di
-                { "delayed_samples": [] }
-
-
-                60 lunghezza di (aprox 50)
-                { "ts": 1717157402214, "dc_id": 2, "rarr": 1, "status": 1 },
-        */
-	/*
-        max_samples = (EMDC_get_queue_msg_length (globals.queue_delayed) - 30) / 60;
-	zlog_info (c, "max samples in queue of delayed message is %d", max_samples);
-	if (max_samples <= 0)
-	{
-		zlog_fatal (c, "queue of delayed message length too small. Exiting");
-		exit(-1);
-	}
-        */
 	short in_memory = 0;
 	s = iniparser_getstring(ini, "DBMGR:IN_MEMORY", "NO");
 	if ( !strcmp (s, "YES") || !strcmp (s, "yes") )
