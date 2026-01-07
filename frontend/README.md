@@ -1,6 +1,6 @@
 # Data acquisition frontend for EMDC application.
 
-## Intallation od 3rd party libraries.
+## Intallation of 3rd party libraries.
 
 ### iniparser
 wget https://github.com/ndevilla/iniparser/archive/refs/tags/v4.2.6.tar.gz
@@ -50,10 +50,12 @@ cd zlog
 make
 sudo make install
 
-## Building the applications
+## Building the application
 
 sudo apt-get install sqlite3
 sudo apt-get install libsqlite3-dev
+
+mkdir /home/emdc/EMDC/frontend/bin/obj
 
 from directory /home/emdc/EMDC/frontend/src
 
