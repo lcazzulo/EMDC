@@ -1,1 +1,1 @@
-# Flask backend for EMDC application
+# Backend for EMDC application
