@@ -50,6 +50,18 @@ cd zlog
 make
 sudo make install
 
+### Eclipse Paho MQTT C
+wget https://github.com/eclipse-paho/paho.mqtt.c/archive/refs/tags/v1.3.15.tar.gz
+gzip -cd v1.3.15.tar.gz  | tar xvf -
+ln -s paho.mqtt.c-1.3.15 paho.mqtt.c
+cd paho.mqtt.cm
+mkdir build
+cd build
+cmake .. -DPAHO_BUILD_SHARED=ON   -DPAHO_BUILD_STATIC=ON   -DPAHO_WITH_SSL=ON
+make
+sudo make install 
+
+
 ## Building the application
 
 sudo apt-get install sqlite3

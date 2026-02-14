@@ -3,16 +3,19 @@
 #include <signal.h>
 #include <limits.h>
 #include <time.h>
+#include <unistd.h>
 #include <sys/time.h>
 #include <errno.h>
 #include <zlog.h>
 #include <iniparser.h>
+#include <MQTTClient.h>
 #include "defines.h"
 #include "queue.h"
 #include "my_json.h"
 #include "my_amqp.h"
 
 #define RETRY_CONNECTION_TIME (10)
+#define MQTT_PORT             (1883)
 
 typedef struct _EMDC_datapublish_globals
 {
@@ -22,9 +25,12 @@ typedef struct _EMDC_datapublish_globals
 	mqd_t queue_in;
         mqd_t queue_out;
 	char broker_address[512];
+        char mqtt_address[512];
 	char user[65];
 	char password[64];
         AMQP_Ctx *ctx;
+        MQTTClient mqtt_client;
+        int connected_to_mqtt;
 
 } EMDC_datapublish_globals;
 
@@ -60,6 +66,163 @@ void timer_handler(int sig, siginfo_t *si, void *uc)
 }
 
 zlog_category_t *c = NULL;
+
+static void build_mqtt_uri(char *out, size_t out_sz,
+                           const char *addr, int port)
+{
+    if (!addr || addr[0] == '\0') 
+    {
+        snprintf(out, out_sz, "tcp://localhost:%d", port);
+        return;
+    }
+
+    /* If config already includes scheme, keep it as-is */
+    if (strncmp(addr, "tcp://", 6) == 0 || strncmp(addr, "ssl://", 6) == 0) 
+    {
+        snprintf(out, out_sz, "%s", addr);
+        return;
+    }
+
+    /* Otherwise build tcp://<addr>:<port> */
+    snprintf(out, out_sz, "tcp://%s:%d", addr, port);
+}
+
+
+static int mqtt_connect_with_autoreconnect(void)
+{
+    int rc;
+    char uri[600];
+
+    build_mqtt_uri(uri, sizeof(uri), globals.mqtt_address, MQTT_PORT);
+    zlog_info(c, "MQTT URI: %s", uri);
+
+    rc = MQTTClient_create(&globals.mqtt_client,
+                           uri,
+                           "datapublish",
+                           MQTTCLIENT_PERSISTENCE_NONE,
+                           NULL);
+    if (rc != MQTTCLIENT_SUCCESS)
+    {
+        zlog_error(c, "MQTTClient_create failed rc=%d", rc);
+        globals.connected_to_mqtt = 0;
+        return -1;
+    }
+
+    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
+    conn_opts.keepAliveInterval = 20;
+    conn_opts.cleansession = 1;
+
+    /* Enable built-in automatic reconnect */
+    conn_opts.retryInterval = 5;  /* seconds */
+
+    rc = MQTTClient_connect(globals.mqtt_client, &conn_opts);
+    if (rc != MQTTCLIENT_SUCCESS) {
+        zlog_error(c, "MQTTClient_connect failed rc=%d", rc);
+        globals.connected_to_mqtt = 0;
+        return -1;
+    }
+
+    globals.connected_to_mqtt = 1;
+    zlog_info(c, "Connected to MQTT (auto-reconnect enabled)");
+    return 0;
+}
+
+static void mqtt_init_until_connected(void)
+{
+    while (go)
+    {
+        if (mqtt_connect_with_autoreconnect() == 0)
+        {
+            return;
+        }
+
+        zlog_warn(c, "MQTT connect failed; retrying in %d seconds", RETRY_CONNECTION_TIME);
+        sleep(RETRY_CONNECTION_TIME);
+    }
+}
+
+static time_t last_mqtt_reconnect_try = 0;
+
+static int mqtt_try_reconnect(void)
+{
+    zlog_debug(c, "Entering mqtt_try_reconnect() ...");
+
+    time_t now = time(NULL);
+
+    /* throttle reconnect attempts */
+    if (last_mqtt_reconnect_try != 0 &&
+        (now - last_mqtt_reconnect_try) < RETRY_CONNECTION_TIME)
+    {
+        zlog_debug(c, "mqtt_try_reconnect(): throttling");
+        return -1;
+    }
+    last_mqtt_reconnect_try = now;
+
+    /* If already connected, nothing to do */
+    if (MQTTClient_isConnected(globals.mqtt_client))
+    {
+        zlog_debug(c, "mqtt_try_reconnect(): already connected");
+        globals.connected_to_mqtt = 1;
+        return 0;
+    }
+
+    zlog_warn(c, "MQTT disconnected, trying reconnect...");
+
+    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
+    conn_opts.keepAliveInterval = 20;
+    conn_opts.cleansession = 1;
+    conn_opts.retryInterval = 5; /* ok to keep */
+
+    int rc = MQTTClient_connect(globals.mqtt_client, &conn_opts);
+    if (rc != MQTTCLIENT_SUCCESS)
+    {
+        zlog_error(c, "MQTT reconnect failed rc=%d", rc);
+        globals.connected_to_mqtt = 0;
+        return -1;
+    }
+
+    zlog_info(c, "MQTT reconnected");
+    globals.connected_to_mqtt = 1;
+    return 0;
+}
+
+static int mqtt_publish_json(const char *topic, const char *payload)
+{
+    if (!globals.connected_to_mqtt || !MQTTClient_isConnected(globals.mqtt_client)) 
+    {
+        globals.connected_to_mqtt = 0;
+        mqtt_try_reconnect();  /* throttled */
+        if (!globals.connected_to_mqtt)
+        {
+            return -1;
+        }
+    }
+
+
+    MQTTClient_message msg = MQTTClient_message_initializer;
+    msg.payload = (void*)payload;
+    msg.payloadlen = (int)strlen(payload);
+    msg.qos = 1;
+    msg.retained = 0;
+
+    MQTTClient_deliveryToken token;
+    int rc = MQTTClient_publishMessage(globals.mqtt_client, topic, &msg, &token);
+    if (rc != MQTTCLIENT_SUCCESS) {
+        zlog_error(c, "MQTT publishMessage failed rc=%d (will auto-reconnect)", rc);
+        globals.connected_to_mqtt = 0;
+        return -1;
+    }
+
+    rc = MQTTClient_waitForCompletion(globals.mqtt_client, token, 3000);
+    if (rc != MQTTCLIENT_SUCCESS) {
+        zlog_error(c, "MQTT waitForCompletion failed rc=%d (will auto-reconnect)", rc);
+        globals.connected_to_mqtt = 0;
+        return -1;
+    }
+
+    return 0;
+}
+
 
 int main (int argc, char *atgv[])
 {
@@ -141,6 +304,15 @@ int init ()
         strncpy (globals.password, s, sizeof (globals.password) - 1);
         zlog_info (c, "DATAPUBLISH:PASSWORD = %s", globals.password);
 
+        s = iniparser_getstring(ini, "DATAPUBLISH:MQTT_ADDRESS", NULL);
+        if (s == NULL)
+        {
+                zlog_fatal (c, "cannot find entry DATAPUBLISH:MQTT_ADDRESS in ini file [%s]", globals.init_file_path);
+                exit(-1);
+        }
+        zlog_info (c, "DATAPUBLISH:MQTT_ADDRESS = %s", s);
+        strncpy (globals.mqtt_address, s, sizeof (globals.mqtt_address) - 1);
+
 
         /* open the sending message queue */
         globals.queue_out = EMDC_queue_init (EMDC_QUEUE_IN_NAME, O_WRONLY, 1, -1, -1);
@@ -161,7 +333,10 @@ int init ()
 
         signal(SIGINT, signal_callback_handler);
         signal(SIGTERM, signal_callback_handler);
-        zlog_info(c, "datasnd started");
+
+        mqtt_init_until_connected();
+
+        zlog_info(c, "datapublish started");
         return 0;
 }
 
@@ -188,6 +363,10 @@ int main_loop ()
                 else
 		{
 		    zlog_debug (c, "no message in queue");
+                    if (!globals.connected_to_mqtt) 
+                    {
+        		mqtt_try_reconnect(); /* throttled */
+    		    }
 		}
         }
         free (buffer_in);
@@ -195,13 +374,14 @@ int main_loop ()
 }
 
 
-int publish_message (const char* str)
+int publish_message(const char* str)
 {
     int ret;
     char buffer[1024];
     const char *routing_key = NULL;
+    const char *topic = NULL;
 
-    EMDCsample* sample = (EMDCsample*) malloc(sizeof(EMDCsample));
+    EMDCsample* sample = (EMDCsample*)malloc(sizeof(EMDCsample));
     if (!sample) {
         zlog_error(c, "malloc failed for EMDCsample");
         return -1;
@@ -246,39 +426,57 @@ int publish_message (const char* str)
         sample->source[sizeof(sample->source) - 1] = '\0';
     }
 
-    /* ---- Routing decision ---- */
+    /* ---- Routing / topic decision ---- */
 
     if (strcmp(sample->event_type, "energy.active") == 0) {
         routing_key = "EMDC.EVENTS.ACTIVE";
+        topic = "emdc/events/energy/active";
     }
     else if (strcmp(sample->event_type, "energy.reactive") == 0) {
         routing_key = "EMDC.EVENTS.REACTIVE";
+        topic = "emdc/events/energy/reactive";
     }
     else {
         routing_key = "EMDC.EVENTS.OTHER";
+        topic = "emdc/events/other";
     }
 
-    /* ---- Publish ---- */
+    /* Serialize enriched event once (used for MQTT and optionally AMQP) */
+    sample_to_json(sample, buffer);
 
+    /* ---- Publish to AMQP (keep current setup working) ---- */
     if (connected_to_broker == 1) {
-
+        /* Keep AMQP publishing the original message (legacy behavior).
+           If you want AMQP to receive the enriched JSON too, replace `str` with `buffer`. */
         ret = AMQP_Sendmessage(globals.ctx, "EMDC", routing_key, str);
 
         if (ret != 0) {
             zlog_error(c, "error publishing message to broker");
             connected_to_broker = 0;
             retry_connect();
-        }
-        else {
-            zlog_info(c, "message published to %s", routing_key);
-
-            /* mark delivered and re-serialize enriched event */
-            sample->status = STATUS_DELIVERED;
-            sample_to_json(sample, buffer);
-
-            EMDC_queue_send(globals.queue_out, buffer);
+        } else {
+            zlog_info(c, "message published to AMQP routing key %s", routing_key);
         }
     }
+
+    /* ---- Publish to MQTT (becomes the source of truth for STATUS_DELIVERED) ---- */
+        ret = mqtt_publish_json(topic, buffer); /* publish enriched JSON */
+        if (ret == 0) {
+            globals.connected_to_mqtt = 1;
+            zlog_info(c, "message published to MQTT topic %s", topic);
+
+            /* Mark delivered ONLY after MQTT success */
+            sample->status = STATUS_DELIVERED;
+            sample_to_json(sample, buffer);
+            EMDC_queue_send(globals.queue_out, buffer);
+        } else {
+            zlog_error(c, "error publishing message to MQTT topic %s", topic);
+            globals.connected_to_mqtt = 0;
+            /* Optional: enqueue UNDELIVERED status if your pipeline expects it */
+            /* sample->status = STATUS_UNDELIVERED;
+               sample_to_json(sample, buffer);
+               EMDC_queue_send(globals.queue_out, buffer); */
+        }
 
     free(sample);
     return 0;
@@ -334,7 +532,11 @@ int fini ()
                 zlog_info(c, "got signal [%d], %s", signum, strsignal(signum));
         }
 
-
+        if (globals.connected_to_mqtt) 
+        {
+    		MQTTClient_disconnect(globals.mqtt_client, 1000);
+	}
+	MQTTClient_destroy(&globals.mqtt_client);
 	EMDC_queue_release (globals.queue_in);
 	EMDC_queue_release (globals.queue_out);
         zlog_info (c, "datapublish exits");
