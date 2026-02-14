@@ -5,10 +5,12 @@ LIB_JSON_C_INCLUDE=/usr/local/include/json-c
 LIB_RABBIT_MQ_C_INCLUDE=../3rdParty/rabbitmq-c/include
 LIBXML2_INCLUDE=/usr/include/libxml2
 LIBSQLITE3_INCLUDE=/usr/local/include
+LIBMQTT_INCLUDE=/usr/local/include
 
 LIBXML2_LIB=/usr/lib
 LIBSQLITE3_LIB=/usr/local/lib
 LIB_RABBIT_MQ_C_LIB=../3rdParty/rabbitmq-c/librabbitmq
+LIBMQTT_LIB=/usr/local/lib
 
 OBJ_PATH=../bin/obj
 BIN_PATH=../bin
@@ -38,7 +40,7 @@ ${OBJ_PATH}/datacap.o : datacap.c xml.h queue.h defines.h
 	${CC} -I${LIB_INIPARSER_INCLUDE} -c -o ${OBJ_PATH}/datacap.o datacap.c
 
 ${OBJ_PATH}/datapublish.o : datapublish.c queue.h defines.h
-	${CC} -I${LIB_INIPARSER_INCLUDE} -I${LIB_RABBIT_MQ_C_INCLUDE} -c -o ${OBJ_PATH}/datapublish.o datapublish.c
+	${CC} -I${LIB_INIPARSER_INCLUDE} -I${LIB_RABBIT_MQ_C_INCLUDE} -I${LIBMQTT_INCLUDE} -c -o ${OBJ_PATH}/datapublish.o datapublish.c
 
 ${OBJ_PATH}/datasnd.o : datasnd.c xml.h queue.h defines.h http.h
 	${CC} -c -o ${OBJ_PATH}/datasnd.o datasnd.c
@@ -56,7 +58,7 @@ ${BIN_PATH}/EMDCdatacap : ${OBJ_PATH}/datacap.o ${OBJ_PATH}/queue.o ${OBJ_PATH}/
 
 ${BIN_PATH}/EMDCdatapublish : ${OBJ_PATH}/datapublish.o ${OBJ_PATH}/queue.o ${OBJ_PATH}/my_json.o ${OBJ_PATH}/my_amqp.o
 	${CC} -o ${BIN_PATH}/EMDCdatapublish ${OBJ_PATH}/datapublish.o ${OBJ_PATH}/queue.o \
-	${OBJ_PATH}/my_json.o ${OBJ_PATH}/my_amqp.o -lzlog -liniparser -ljson-c -L${LIB_RABBIT_MQ_C_LIB} -lrabbitmq -lpthread -lrt
+	${OBJ_PATH}/my_json.o ${OBJ_PATH}/my_amqp.o -lzlog -liniparser -ljson-c -L${LIB_RABBIT_MQ_C_LIB} -L${LIBMQTT_LIB} -lrabbitmq -lpaho-mqtt3c -lpthread -lrt
 
 ${BIN_PATH}/EMDCdatasnd : ${OBJ_PATH}/datasnd.o ${OBJ_PATH}/xml.o ${OBJ_PATH}/list.o ${OBJ_PATH}/queue.o ${OBJ_PATH}/http.o
 	${CC} -o ${BIN_PATH}/EMDCdatasnd ${OBJ_PATH}/datasnd.o ${OBJ_PATH}/queue.o \
