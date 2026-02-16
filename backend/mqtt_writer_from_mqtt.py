@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 # -----------------------------
 # CONFIGURATION
 # -----------------------------
-MQTT_BROKER = "localhost"
+MQTT_BROKER = "mosquitto"
 MQTT_PORT = 1883
 MQTT_USER = "mqtt_user"
 MQTT_PASSWORD = "emdc"
