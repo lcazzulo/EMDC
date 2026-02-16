@@ -28,6 +28,7 @@ typedef struct _EMDC_datapublish_globals
         char mqtt_address[512];
 	char user[65];
 	char password[64];
+        int enable_amqp;
         AMQP_Ctx *ctx;
         MQTTClient mqtt_client;
         int connected_to_mqtt;
@@ -54,7 +55,11 @@ void signal_callback_handler(int sgnm)
 
 void timer_handler(int sig, siginfo_t *si, void *uc)
 {
-        int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672, globals.user, globals.password);
+        if (!globals.enable_amqp)
+	{
+        	return;
+    	}
+	int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672, globals.user, globals.password);
         if (ret != 0)
         {
                 retry_connect();
@@ -304,6 +309,10 @@ int init ()
         strncpy (globals.password, s, sizeof (globals.password) - 1);
         zlog_info (c, "DATAPUBLISH:PASSWORD = %s", globals.password);
 
+        globals.enable_amqp = iniparser_getboolean(ini, "DATAPUBLISH:ENABLE_AMQP", 1);
+        zlog_info(c, "DATAPUBLISH:ENABLE_AMQP = %d", globals.enable_amqp);
+
+
         s = iniparser_getstring(ini, "DATAPUBLISH:MQTT_ADDRESS", NULL);
         if (s == NULL)
         {
@@ -318,17 +327,27 @@ int init ()
         globals.queue_out = EMDC_queue_init (EMDC_QUEUE_IN_NAME, O_WRONLY, 1, -1, -1);
 	/* open the receiving message queue */
 	globals.queue_in = EMDC_queue_init (EMDC_QUEUE_OUT_NAME, O_RDONLY, 0, -1, -1);
-        /* connect to broker */
-	globals.ctx = (AMQP_Ctx*)malloc(sizeof(AMQP_Ctx));
-        int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672, globals.user, globals.password);
-        if (ret != 0)
-        {
-		zlog_error (c, "error connecting to broker");
-		retry_connect();
-        }
-	else
+        
+        if (globals.enable_amqp) 
 	{
-		connected_to_broker = 1;
+        	/* connect to broker */
+		globals.ctx = (AMQP_Ctx*)malloc(sizeof(AMQP_Ctx));
+        	int ret = AMQP_Init(globals.ctx, globals.broker_address, 5672, globals.user, globals.password);
+        	if (ret != 0)
+        	{
+			zlog_error (c, "error connecting to broker");
+			retry_connect();
+        	}
+		else
+		{
+			connected_to_broker = 1;
+		}
+	}
+	else 
+        {
+   		globals.ctx = NULL;
+    		connected_to_broker = 0;
+    		zlog_warn(c, "AMQP disabled by configuration");
 	}
 
         signal(SIGINT, signal_callback_handler);
@@ -445,7 +464,7 @@ int publish_message(const char* str)
     sample_to_json(sample, buffer);
 
     /* ---- Publish to AMQP (keep current setup working) ---- */
-    if (connected_to_broker == 1) {
+    if (connected_to_broker == 1 && connected_to_broker == 1) {
         /* Keep AMQP publishing the original message (legacy behavior).
            If you want AMQP to receive the enriched JSON too, replace `str` with `buffer`. */
         ret = AMQP_Sendmessage(globals.ctx, "EMDC", routing_key, str);
@@ -532,9 +551,14 @@ int fini ()
                 zlog_info(c, "got signal [%d], %s", signum, strsignal(signum));
         }
 
-        if (globals.connected_to_mqtt) 
+        if (globals.connected_to_mqtt)
         {
     		MQTTClient_disconnect(globals.mqtt_client, 1000);
+	}
+        if (globals.enable_amqp && globals.ctx) 
+        {
+	    free(globals.ctx);
+    	    globals.ctx = NULL;
 	}
 	MQTTClient_destroy(&globals.mqtt_client);
 	EMDC_queue_release (globals.queue_in);
